@@ -62,7 +62,7 @@ console.log('extippp' + ip);
 KAD.prototype.startDHT = function(portIn) {
 
   localthis = this;
-/*
+
   var ipaddress =  this.ipPublic;
   // Decorate your transport
 //console.log('exterip pickedup == ' + ip + 'and port== ' + portnumber);
@@ -92,7 +92,7 @@ KAD.prototype.startDHT = function(portIn) {
     validator: 'somethingtocheck'
     //storage: new KadLocalStorage('label')
   });
-*/
+/*
 // local DHT network setup
 var ipaddress =  this.ipPublic;
 // Decorate your transport
@@ -106,7 +106,7 @@ this.dht = new kad.Node({
   validator: 'somethingtocheck'
   //storage: new KadLocalStorage('label')
   });
-
+*/
   if(this.dht)
   {
     var seedData = {};
