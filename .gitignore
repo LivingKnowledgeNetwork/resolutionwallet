@@ -1,0 +1,7 @@
+/node_modules/*
+/build/*
+/dist/*
+/src/server/node_modules/*
+/src/datadir/*
+/src/server/datadir/*
+/src/server/settings.js

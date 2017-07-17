@@ -1,0 +1,22 @@
+{
+  "name": "resolutionwallet",
+  "description": "living knowledge network wallet",
+  "version": "0.1.1",
+  "author": "James Littlejohn <james@aboynejames.co.uk> (https://twitter.com/aboynejames)",
+  "main": "index.js",
+  "dependencies": {
+    
+  },
+  "scripts": {
+    "postinstall": "cd src/server/node_modules/leveldown && HOME=~/.electron-gyp node-gyp rebuild --target=1.4.16 --arch=x64 --dist-url=https://atom.io/download/atom-shell",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.37.6",
+    "electron-rebuild": "^1.5.11"
+  },
+  "build": {
+    "appId": "com.example.electron-res",
+    "category": "elres.app.category.type"
+  }
+}

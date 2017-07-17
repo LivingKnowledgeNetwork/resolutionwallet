@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en"  > <!--manifest="resolutionclient.appcache"-->
+<head>
+		<meta charset="utf-8">
+		<title>Resolution Wallet | home</title>
+
+		<link rel="stylesheet" href="css/gaiasoulstyle.css">
+
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="start.js"></script>
+			<script src="socket.io.js"></script>
+
+		<style>
+		body { margin: 0; overflow: hidden; }
+		.tm  { position: absolute; top: 10px; right: 10px; }
+		.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }
+		.webgl-error a { color: #fff; }
+		</style>
+
+</head>
+
+<body>
+	<header>
+		<img id="quoteslogo" src="images/lknlogo.png"> Resolution Wallet
+		<div id="attention-focus">
+		</div>
+		<div id="sensors">
+			<a href="" id="sensor-list">Sensors</a>
+		</div>
+		<div id="dmap">
+			<a href="#" id="dmap-list">Science</a>
+		</div>
+		<div id="ptop">
+			<a href="" id="ptop-list">PtoP</a>
+		</div>
+		<div id="identity">
+			<a href="" id="authorisation-in">Sign-in</a>
+		</div>
+	</header>
+
+	<section id="gaiasoul">
+		<nav id="select-gaiasoul-view">
+			<ul>
+				<li><a href="" id="gaiasoul-me-view" class="notlivecontext" data-mappingview="on" >Me</a></li>
+				<li><a href="" id="gaiasoul-ourworld-view" class="notlivecontext" data-mappingview="off" >Our World</a></li>
+				<li><a href="" id="gaiasoul-stream-view" class="livecontext" data-mappingview="off" >Stream</a></li>
+				<li><a href="" id="gaiasoul-mindmap-view" class="notlivecontext" data-mappingview="off" >KnowledgeMap</a></li>
+			</ul>
+		</nav>
+	</section>
+
+	<section id="authorisation">
+		<form id="siginform" action="#" method="post">
+			<div><label for="name">Username</label>
+						<input type="text" size="16" title="name" class="text ui-widget-content ui-corner-all" id="name">
+			</div>
+			<div><label for="password">Password</label>
+				<input type="password" size="16" title="password" value="" class="text ui-widget-content ui-corner-all" id="password">
+			</div>
+			<button id="network-signin" class="submit" type="submit">Sign-in to network</button>
+		</form>
+		<section id="signed-in">
+			<section id="live-status" >
+				<div id="dhtkad-api">
+					<a id="connectDHT" href="">Connect to LKN Protocol</a> <!--<a id="seedDHT" href="" >SEED network</a>-->
+				</div>
+				<div id="ethereum-api">
+					<!--<span id=""><input id="connect-ethpk" class="form-ethpk" type="text" placeholder=""></input></span>
+					<a id="ethereum-set" href="" >Set ethereum public key</a>-->
+				</div>
+			</section>
+			<section id="connectivity">
+				<header class="onlinemode">
+					<nav id="dapp-api-status">
+						<ul>
+							<li>
+								 <img id="image-dshare" src="images/dshare-small.png" /> Decentralized Connectivity
+								 <!--<a href="" id="sshare" data-sshare-status="on" ><img id="image-sshare" src="images/sshare-small.png" /></a>
+								 <a href="" id="help-online" >HELP</a>-->
+							</li>
+						</ul>
+					</nav>
+				</header>
+				<div id="science-api">
+					<header>SCIENCE & COMPUTATION</header>
+					<div class="D-apis" >LKN<div id="Dsensor-api-status">add</div></div>
+					<div class="D-apis" >ethereum <div id="ethereum-api-status">add</div></div>
+					<div class="D-apis" >Jupyter <div id="jupyter-api-status">add</div></div>
+					<div class="D-apis" >R <div id="rpython-api-status">add</div></div>
+				</div>
+				<div id="storage-api">
+					<header>STORAGE</header>
+					<div class="D-apis" >MaidSafe <div id="maidsafe-api-status">add</div></div>
+					<div class="D-apis" >BigchainDB <div id="bigchain-api-status">add</div></div>
+					<div class="D-apis" >IPFS <div id="ipfs-api-status">add</div></div>
+					<div class="D-apis" >DAT <div id="dat-api-status">add</div></div>
+					<div class="D-apis" >Swarm <div id="swarm-api-status">add</div></div>
+
+				</div>
+				<div id="money-api">
+					<header>Currency</header>
+					<div class="D-apis" >Knowledge Tokens <div id="quotes-api-status">add</div></div>
+					<div class="D-apis" >bitcoin <div id="bitcoin-api-status">add</div></div>
+					<div class="D-apis" >ether <div id="ether-api-status">add</div></div>
+					<div class="D-apis" >safecoin <div id="safecoin-api-status">add</div></div>
+					<div class="D-apis" >dataCredits <div id="datacredits-api-status">add</div></div>
+				</div>
+				<div id="dshare-api-add">
+					Making Decentralized Knowledge Happy
+				</div>
+			</section>
+		</section>
+		<section id="lkn-governance">
+				<header>GOVERNANCE</header>
+		</section>
+	</section>
+
+	<section id="sensor-data">
+	<section id="sensor-data-dashboard" >
+			<header>
+				TOTAL data 34.34GB <a href="" id="sensor-data-add" >Add Sensor</a> <button id="sensor-bluetooth-discovery" class="submit" type="submit">Scan bluetooth discovery</button><button id="upload-genome" class="submit" type="submit">Upload genome</button>
+			</header>
+			<div id="sensor-data-live-list" >
+				<header>	Live Connections</header><a id="refresh-sensor-list" href="">Call contracts</a>
+				<ul>
+					<li></li>
+				</ul>
+			</div>
+		</section>
+		<section id="sensor-data-list" >
+			<header>Sensors</header>
+				<ul>
+				</ul>
+		</section>
+		<section id="sensor-data-add-new" >
+
+		</section>
+		<section id="sensor-data-add-butt" >
+
+		</section>
+	</section>
+
+	<section id="dmap-view">
+		<section id="dmap-dashboard" >
+			<header>
+				Number Dmaps authored -- Total Network Compute -- hours <a href="" id="dmap-add" >Add Dmap</a>
+			</header>
+			<div id="dmaps-existing">
+				<a href="" id="dmap-existing-call">Existing Damps</a>
+			</div>
+			<div id="dmap-live-form" >
+			</div>
+			<div id="dmap-add-button" ></div>
+			<div id="dmap-live-list" ></div>
+		</section>
+		<section id="dmap-add-new" >
+
+		</section>
+		<section id="dmaps-view" >
+
+		</section>
+		<section id="gene-view" >
+
+		</section>
+	</section>
+
+	<section id="ptop-view">
+		<div id="lkn-start-cycle">
+			<span id="dht-new-message"><input id="new-text-message" class="form-dht" type="text" placeholder=""></input></span><a id="sendmDHT" href="" >Start science</a>
+		</div>
+		<div id="lkn-start-datamodel">
+			<span id="dht-new-message"><input id="new-text-message" class="form-dht" type="text" placeholder=""></input></span><a id="sendmDHT" href="" >Set datamodel</a>
+		</div>
+		<div id="lkn-data-validation">
+			<span id="dht-new-message"><input id="new-text-message" class="form-dht" type="text" placeholder=""></input></span><a id="sendmDHT" href="" >Data Validate</a>
+		</div>
+		<div id="lkn-compute-validation">
+			<span id="dht-new-message"><input id="new-text-message" class="form-dht" type="text" placeholder=""></input></span><a id="sendmDHT" href="" >Compute Validate</a>
+		</div>
+		<div id="lkn-data-validation">
+			<span id="dht-new-message"><input id="new-text-message" class="form-dht" type="text" placeholder=""></input></span><a id="sendmDHT" href="" >Value issuance</a>
+		</div>
+		<div>
+			<a id="readmDHT" href="" >Read message</a>
+		</div>
+
+		<!--<header>Peer to Peer Connections <a href="" id="ptop-add" >Add Peer</a></header>-->
+		<div id="ptop-live-list" >
+			<ul>
+				<li>LIVE</li>
+			</ul>
+		</div>
+
+		<header>Network Messages</header>
+		<div id="network-messages"></div>
+		<div id="tcpreturn"></div>
+	</section>
+
+	<div id="jqueryreturn"></div>
+	<div id="socketreturn"></div>
+
+	<section id="being">
+
+		<div id="containerme"></div>
+	</section>
+
+	<section id="ourworld">
+		Our World
+		<div id="webgl"></div>
+	</section>
+
+	<section id="stream">
+		Dmaps Notification Stream
+		<div id="stream-dmaps">
+			<ol>
+
+			</ol>
+		</div>
+	</section>
+
+	<section id="mindmap">
+		KnowledgeMap
+
+	</section>
+
+
+<div id="dmap-template-form">
+<form id="dmap_form" name="dmap_form" method="post" action="#">
+	    <ul>
+		<li>
+		     <h2>New Dmap</h2>
+		     <span class="required_notification">* Denotes Required Field</span>
+		</li>
+		<li>
+		    <label for="dmap-add-name">Name:</label>
+		    <input id="dmap-mapping-name" placeholder="Dmap mapping name" required="" type="text">
+		</li>
+		<li>
+		    <label for="dmap-add-description">Description:</label>
+		    <textarea name="message" cols="40" rows="6" required="" id="dmap-mapping-description"></textarea>
+		</li>
+		<li>
+			<section id="dmap-scripting">
+				<header>DATA MODEL</header>
+				<li>
+				<label for="dmap-add-scripting">Scripting:</label>
+				<select class="select-dmap-id" id="dmap-mapping-build">
+					<option value="none" selected="">Please select</option>
+					<option value="temperature">Temperature</option>
+					<option value="activity">Activity</option>
+					<option value="ir-light">IR light</option>
+					<option value="time">Time</option>
+					<option value="gene">Gene</option>
+					<option value="gene">Blood</option>
+					<option value="nitrogen">Nitrogen</option>
+					<option value="sunshine">Sun</option>
+					<option value="humidity">Humidity</option>
+					<option value="wind">Wind</option>
+				</select>
+			</li>
+			<li>
+				<select class="select-dmap-id" id="dmap-mapping-build-second">
+					<option value="none" selected="">Please select</option>
+					<option value="temperature">Temperature</option>
+					<option value="activity">Activity</option>
+					<option value="ir-light">IR light</option>
+					<option value="time">Time</option>
+					<option value="gene">Gene</option>
+					<option value="gene">Blood</option>
+					<option value="nitrogen">Nitrogen</option>
+					<option value="sunshine">Sun</option>
+					<option value="humidity">Humidity</option>
+					<option value="wind">Wind</option>
+				</select>
+			</li>
+			</section>
+			<section id="dmap-scripting-outputs">
+				<header>OUTPUT</header>
+				<ul>
+					<li>Out put variable Activity</li>
+				</ul>
+			</section>
+		</li>
+		<li>
+			<div class="clear"></div>
+			<section  id="dmap-mapping-code">
+				<header>Code</header>
+				<li>
+					<label for="add-code-name">Github url:</label>
+					<input type="text"  id="mapping-code-github" placeholder="" required />
+				</li>
+				<li>
+					<label for="add-code-name">Github hash:</label>
+					<input type="text"  id="mapping-code-githubhash" placeholder="" required />
+				</li>
+			</section>
+		</li>
+		<li>
+			<section id="dmap-mapping-notification">
+				<header>Notifications</header>
+				<li>M T W T F S S</li>
+			</section>
+		</li>
+		<li>
+			<section id="dmap-mapping-visualization">
+				<header>Visualization</header>
+				<li><input type="checkbox" id="3d-human"  value="3d-human" >3D Human</li>
+				<li><input type="checkbox" id="3d-world" value="3d-world" >3D World</li>
+				<li><input type="checkbox" id="3d-knowledgemap" value="3d-knowledgemap" >Knowledge Map</li>
+				<li><input type="checkbox" id="customchart" value="customchart" >Custom charts</li>
+				<li><input type="checkbox" id="datatables" value="datatables" >Data tables</li>
+				<li>Add own custom visualization plugin</li>
+			</section>
+		</li>
+		<li>
+			<section id="dmap-dapp-url">
+				<header>Dapp - external application</header>
+				<li>
+					<label for="dapp-location-url">Dapp location</label>
+					<input type="text"  id="dapp-location-directory" placeholder="" required />
+				</li>
+			</section>
+		</li>
+		<li>
+			<section id="dmap-feedback">
+			</section>
+		</li>
+	    </ul>
+</form>
+
+</div>
+
+<div id="sensor-data-template-form">
+	<form id="sensor_form" action="#" method="post" name="sensor_form">
+	  <ul>
+			<li>
+			     <h2>New sensor</h2>
+			     <span class="required_notification">* Denotes Required Field</span>
+			</li>
+			<li>
+			    <label for="add-name-sensor">Name:</label>
+			    <input type="text" id="add-name-sensor"  placeholder="Sensor name" required />
+			</li>
+			<li>
+			    <label for="add-type-sensor">Type:</label>
+			    <input type="text"  id="add-firmware-sensor" placeholder="firmware ID" required />
+			</li>
+			<li>
+				<div id="checkbox-new"></div>
+			</li>
+			<li>
+				<button class="submit" type="submit" id="sensor-data-save">Add Sensor & Register on Blockchain</button>
+
+			</li>
+	  </ul>
+	</form>
+</div>
+
+<!-- file upload -->
+<section id="file-upload-source">
+	<form id="upload" action="" method="POST" enctype="multipart/form-data">
+
+	<fieldset>
+	<legend>HTML File Upload</legend>
+
+	<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+	<div>
+		<label for="fileselect">Files to upload:</label>
+		<input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+		<div id="filedrag">or drop files here</div>
+	</div>
+
+	<div id="submitbutton">
+		<button type="submit">Upload Files</button>
+	</div>
+
+	</fieldset>
+
+	</form>
+
+	<div id="messages">
+		<p>Status Messages</p>
+	</div>
+</section>
+
+</body>
+
+</html>

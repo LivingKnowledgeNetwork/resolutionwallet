@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "socket.io": "1.7.3",
+    "external-ip": "^0.2.4",
+    "kad": "^1.6.1",
+    "kad-traverse": "0.0.4"
+  },
+  "devDependencies": {
+
+  }
+}
