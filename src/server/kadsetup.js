@@ -50,6 +50,7 @@ KAD.prototype.getpublicIP = function() {
     }
 console.log('extippp' + ip);
     localthis.ipPublic = ip;
+    localthis.startDHT(8816)
   });
 
 };
@@ -110,8 +111,8 @@ this.dht = new kad.Node({
   if(this.dht)
   {
     var seedData = {};
-  	seedData.ip = '52.4.43.80';//'127.0.0.1';  // need list of peers
-  	seedData.port = 8816;
+  	seedData.ip = '52.4.43.80';//'188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
+  	seedData.port = 3333;
   	var messagePtoP = {};
   	messagePtoP.type = 'join';
   	messagePtoP.text = 'Welcome to LKN Network';
@@ -130,7 +131,7 @@ this.dht = new kad.Node({
 */
 KAD.prototype.listLocalMessages = function() {
 
-// try and read all message files in directory
+  // try and read all message files in directory
   var localthis = this;
   var testlstore = new messageFiles('./datadir');
   var listfiles = '';
@@ -178,10 +179,10 @@ KAD.prototype.seedSingle = function(seedIn) {
     address: seedIn.ip,
     port: 8816
   };
-//console.log(seed);
+console.log(seed);
   var localthis = this;
   this.dht.connect(seed, function(err) {
-//console.log('begin seed connection');
+console.log('begin seed connection');
     var key = hashkey;
     var message = seedIn.sendmessage;
     localthis.putMessage(key, message);

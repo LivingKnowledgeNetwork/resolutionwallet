@@ -19,6 +19,7 @@ console.log('peer to peer live class');
 	this.livepublicIP = '';
 	this.liveethpk = '';
  	this.liveDHT = new kadsetup();
+	this.startDHTkad(8816)
 
 
 };
@@ -59,7 +60,7 @@ peerTopeer.prototype.setEthpk = function(ekeyIN) {
 peerTopeer.prototype.startDHTkad = function(portIN) {
 
 	var localthis = this;
-	this.liveDHT.startDHT(portIN);
+	//this.liveDHT.startDHT(portIN);
 	this.liveDHT.listLocalMessages();
 
 	this.liveDHT.on("newMfile", function(newFileIN) {
@@ -100,12 +101,13 @@ peerTopeer.prototype.seedDHTkad = function() {
 */
 peerTopeer.prototype.sendmDHTkad = function(textIN) {
 
-	var seedData = [];
-	//seedData.push('127.0.0.1');  // need list of peers
-	//seedData.push(8816);
-	//seedData.push('hellow work meesgae');
+	var messagePtoP = {};
+	messagePtoP.type = textIN.type;
+	messagePtoP.lkn = textIN.lkn
+	messagePtoP.text = textIN.text
+	var serialisemessage = JSON.stringify(messagePtoP);
 
-	this.liveDHT.putMessage('', textIN);
+	this.liveDHT.putMessage('', serialisemessage);
 
 };
 
@@ -172,6 +174,12 @@ console.log('filter broadcast messaeg ============== message');
 console.log('filter smart contract message ============== smart contract message');
 		// pass on message to UI
 		localthis.emit('client-message', messagePack);
+
+	}
+	else
+	{
+console.log('LKN protocol input type ----------->');
+console.log(messContent);
 
 	}
 

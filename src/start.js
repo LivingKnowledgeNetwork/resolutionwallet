@@ -44,11 +44,67 @@ console.log(idclick);
 
 			break;
 
-			case "sendmDHT":
+			case "lkn-start-cycle":
 				//send a message to server to connect to peer to peer Network
 				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#new-text-message.form-dht").val();
+				var messageNewstring = $("#dht-new-message input#lkn-cycle-message.form-dht").val();
 				messageContent.type = 'sendm';
+				messageContent.lkn = 'start';
+				messageContent.text = messageNewstring;
+				socketpi.emit('LKN', messageContent);
+
+			break;
+
+			case "lkn-validate-datamodel":
+				//send a message to server to connect to peer to peer Network
+				var messageContent = {};
+				var messageNewstring = $("#dht-new-message input#lkn-datamodel-message.form-dht").val();
+				messageContent.type = 'sendm';
+				messageContent.lkn = 'datamodel';
+				messageContent.text = messageNewstring;
+				socketpi.emit('LKN', messageContent);
+
+			break;
+
+			case "lkn-validate-data":
+				//send a message to server to connect to peer to peer Network
+				var messageContent = {};
+				var messageNewstring = $("#dht-new-message input#lkn-data-message.form-dht").val();
+				messageContent.type = 'sendm';
+				messageContent.lkn = 'data';
+				messageContent.text = messageNewstring;
+				socketpi.emit('LKN', messageContent);
+
+			break;
+
+			case "lkn-validate-science":
+				//send a message to server to connect to peer to peer Network
+				var messageContent = {};
+				var messageNewstring = $("#dht-new-message input#lkn-science-message.form-dht").val();
+				messageContent.type = 'sendm';
+				messageContent.lkn = 'science';
+				messageContent.text = messageNewstring;
+				socketpi.emit('LKN', messageContent);
+
+			break;
+
+			case "lkn-validate-compute":
+				//send a message to server to connect to peer to peer Network
+				var messageContent = {};
+				var messageNewstring = $("#dht-new-message input#lkn-science-message.form-dht").val();
+				messageContent.type = 'sendm';
+				messageContent.lkn = 'compute';
+				messageContent.text = messageNewstring;
+				socketpi.emit('LKN', messageContent);
+
+			break;
+
+			case "lkn-consensus-value":
+				//send a message to server to connect to peer to peer Network
+				var messageContent = {};
+				var messageNewstring = $("#dht-new-message input#lkn-value-message.form-dht").val();
+				messageContent.type = 'sendm';
+				messageContent.lkn = 'value';
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 

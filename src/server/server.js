@@ -69,7 +69,7 @@ console.log('server up');
 			}
 			else if(dataIN.type == "sendm")
 			{
-				PeertoPeer.sendmDHTkad(dataIN.text);
+				PeertoPeer.sendmDHTkad(dataIN);
 			}
 			else if(dataIN.type == "smartcontractID")
 			{
