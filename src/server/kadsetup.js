@@ -161,7 +161,7 @@ KAD.prototype.listLocalMessages = function() {
 
       });
 
-	}	,14000)
+	}	,14)
 
 };
 

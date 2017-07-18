@@ -78,6 +78,24 @@ console.log('server up');
 
 
 		});
+
+		PeertoPeer.on("client-message", function(newMessage) {
+				// send data back to client with message
+				socket.emit('new-message-file', newMessage);
+
+			});
+
+		PeertoPeer.on("sc-notification", function(newSCnotice) {
+			// call ethereum api
+			socket.emit('new-sc-notification', newSCnotice);
+
+		});
+
+		PeertoPeer.on("lkn-message", function(newSCnotice) {
+			// call ethereum api
+			socket.emit('new-lkn-message', newSCnotice);
+
+		});
 	});
 
 } // closes start function

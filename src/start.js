@@ -17,6 +17,14 @@ $(document).ready(function(){
 		e.preventDefault(e);
 		var idclick = $(this).attr("id");
 console.log(idclick);
+		var cycleid = $("#dht-new-message input#lkn-cycle-message.form-dht").val()
+/*		var cycleid =  $("#lkn-cycle-id").data("cycleid");
+console.log(cycleid);
+		if(cycleid == undefined)
+		{
+console.log('cycleid not recognised');
+		}*/
+console.log(cycleid);
 		switch(idclick){
 
 			case "authorisation-in":
@@ -50,6 +58,7 @@ console.log(idclick);
 				var messageNewstring = $("#dht-new-message input#lkn-cycle-message.form-dht").val();
 				messageContent.type = 'sendm';
 				messageContent.lkn = 'start';
+				messageContent.cycleid = messageNewstring;
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 
@@ -61,6 +70,7 @@ console.log(idclick);
 				var messageNewstring = $("#dht-new-message input#lkn-datamodel-message.form-dht").val();
 				messageContent.type = 'sendm';
 				messageContent.lkn = 'datamodel';
+				messageContent.cycleid = cycleid;
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 
@@ -72,6 +82,7 @@ console.log(idclick);
 				var messageNewstring = $("#dht-new-message input#lkn-data-message.form-dht").val();
 				messageContent.type = 'sendm';
 				messageContent.lkn = 'data';
+				messageContent.cycleid = cycleid;
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 
@@ -83,6 +94,7 @@ console.log(idclick);
 				var messageNewstring = $("#dht-new-message input#lkn-science-message.form-dht").val();
 				messageContent.type = 'sendm';
 				messageContent.lkn = 'science';
+				messageContent.cycleid = cycleid;
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 
@@ -91,9 +103,10 @@ console.log(idclick);
 			case "lkn-validate-compute":
 				//send a message to server to connect to peer to peer Network
 				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#lkn-science-message.form-dht").val();
+				var messageNewstring = $("#dht-new-message input#lkn-compute-message.form-dht").val();
 				messageContent.type = 'sendm';
 				messageContent.lkn = 'compute';
+				messageContent.cycleid = cycleid;
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 
@@ -105,6 +118,7 @@ console.log(idclick);
 				var messageNewstring = $("#dht-new-message input#lkn-value-message.form-dht").val();
 				messageContent.type = 'sendm';
 				messageContent.lkn = 'value';
+				messageContent.cycleid = cycleid;
 				messageContent.text = messageNewstring;
 				socketpi.emit('LKN', messageContent);
 
@@ -1051,6 +1065,48 @@ console.log('permission grant storeage contract ID =====');
 
 			$("#network-messages").append(grantnotice);
 		}
+
+	});
+
+	socketpi.on('new-lkn-message', function (lknmessageIn) {
+		// which cycle belongs too?
+console.log(lknmessageIn);
+
+		if(lknmessageIn.lkn == 'start')
+		{
+			var lkncycle = '';
+			lkncycle += '<div id="lkn-cycle-id" data-cycleid=' + lknmessageIn.cycleid + '>';
+			lkncycle += 'Cycle No. = 1  ID= ' + lknmessageIn.cycleid;
+			lkncycle += '<span id="lkn-datamodel-' + lknmessageIn.cycleid + '"> Data Model: </span>';
+			lkncycle += '<span id="lkn-data-' + lknmessageIn.cycleid + '"> Data:  </span>';
+			lkncycle += '<span id="lkn-science-' + lknmessageIn.cycleid + '"> Science: </span>';
+			lkncycle += '<span id="lkn-compute-' + lknmessageIn.cycleid + '"> Compute: </span>';
+			lkncycle += '<span id="lkn-value-' + lknmessageIn.cycleid + '"> Value:: </span>';
+			lkncycle += '</div>';
+
+			$("#network-messages").append(lkncycle);
+		}
+		else if(lknmessageIn.lkn == 'datamodel')
+		{
+			$("#lkn-datamodel-" + lknmessageIn.cycleid).append(lknmessageIn.text);
+		}
+		else if(lknmessageIn.lkn == 'data')
+		{
+			$("#lkn-data-" + lknmessageIn.cycleid).append('<a href="' + lknmessageIn.text + '">Source</a>');
+		}
+		else if(lknmessageIn.lkn == 'science')
+		{
+			$("#lkn-science-" + lknmessageIn.cycleid).append('<a href="' + lknmessageIn.text + '">Repo</a>');
+		}
+		else if(lknmessageIn.lkn == 'compute')
+		{
+			$("#lkn-compute-" + lknmessageIn.cycleid).append(lknmessageIn.text);
+		}
+		else if(lknmessageIn.lkn == 'value')
+		{
+			$("#lkn-value-" + lknmessageIn.cycleid).append(lknmessageIn.text);
+		}
+
 
 	});
 

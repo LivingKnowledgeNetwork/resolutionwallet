@@ -104,6 +104,7 @@ peerTopeer.prototype.sendmDHTkad = function(textIN) {
 	var messagePtoP = {};
 	messagePtoP.type = textIN.type;
 	messagePtoP.lkn = textIN.lkn
+	messagePtoP.cycleid = textIN.cycleid;
 	messagePtoP.text = textIN.text
 	var serialisemessage = JSON.stringify(messagePtoP);
 
@@ -176,10 +177,51 @@ console.log('filter smart contract message ============== smart contract message
 		localthis.emit('client-message', messagePack);
 
 	}
-	else
+	else if(messContent.lkn)
 	{
 console.log('LKN protocol input type ----------->');
 console.log(messContent);
+		var lknprocess = messContent.lkn;
+
+		switch(lknprocess){
+
+			case "start":
+
+						localthis.emit('lkn-message', messContent);
+
+			break;
+
+			case "datamodel":
+
+						localthis.emit('lkn-message', messContent);
+
+			break;
+
+			case "data":
+
+					localthis.emit('lkn-message', messContent);
+
+			break;
+
+			case "science":
+
+					localthis.emit('lkn-message', messContent);
+
+			break;
+
+			case "compute":
+
+					localthis.emit('lkn-message', messContent);
+
+			break;
+
+			case "value":
+
+					localthis.emit('lkn-message', messContent);
+
+			break;
+
+		}
 
 	}
 
