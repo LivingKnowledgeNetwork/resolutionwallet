@@ -18,13 +18,7 @@ $(document).ready(function(){
 		var idclick = $(this).attr("id");
 console.log(idclick);
 		var cycleid = $("#dht-new-message input#lkn-cycle-message.form-dht").val()
-/*		var cycleid =  $("#lkn-cycle-id").data("cycleid");
-console.log(cycleid);
-		if(cycleid == undefined)
-		{
-console.log('cycleid not recognised');
-		}*/
-console.log(cycleid);
+
 		switch(idclick){
 
 			case "authorisation-in":
@@ -38,7 +32,14 @@ console.log(cycleid);
 				$("#ourworld").hide();
 				$("#stream").hide();
 
-				break;
+			break;
+
+			case "urllink":
+
+				var buildurl = $(idclick).attr('href');
+				window.open(buildurl);
+
+			break;
 
 			case "connectDHT":
 				//send a message to server to connect to peer to peer Network
@@ -593,6 +594,14 @@ console.log($(targetclick).attr("class"));
 
 
 		}
+		else if($(targetclick).attr("id") == "urllink")
+		{
+
+			var buildurl = $(targetclick).attr('href');
+console.log(buildurl);
+			window.open(buildurl);
+
+		}
 
 	});
 
@@ -1088,23 +1097,23 @@ console.log(lknmessageIn);
 		}
 		else if(lknmessageIn.lkn == 'datamodel')
 		{
-			$("#lkn-datamodel-" + lknmessageIn.cycleid).append(lknmessageIn.text);
+			$("#lkn-datamodel-" + lknmessageIn.cycleid).append('<b>' + lknmessageIn.text + '</b>');
 		}
 		else if(lknmessageIn.lkn == 'data')
 		{
-			$("#lkn-data-" + lknmessageIn.cycleid).append('<a href="' + lknmessageIn.text + '">Source</a>');
+			$("#lkn-data-" + lknmessageIn.cycleid).append('<a id="urllink" href="' + lknmessageIn.text + '">Source</a>');
 		}
 		else if(lknmessageIn.lkn == 'science')
 		{
-			$("#lkn-science-" + lknmessageIn.cycleid).append('<a href="' + lknmessageIn.text + '">Repo</a>');
+			$("#lkn-science-" + lknmessageIn.cycleid).append('<a id="urllink" href="' + lknmessageIn.text + '">Repo</a>');
 		}
 		else if(lknmessageIn.lkn == 'compute')
 		{
-			$("#lkn-compute-" + lknmessageIn.cycleid).append(lknmessageIn.text);
+			$("#lkn-compute-" + lknmessageIn.cycleid).append('<b>' + lknmessageIn.text + '</b>');
 		}
 		else if(lknmessageIn.lkn == 'value')
 		{
-			$("#lkn-value-" + lknmessageIn.cycleid).append(lknmessageIn.text);
+			$("#lkn-value-" + lknmessageIn.cycleid).append('<b>' + lknmessageIn.text + '</b>');
 		}
 
 
