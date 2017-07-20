@@ -1,4 +1,6 @@
 /node_modules/*
+/datadir/*
+/oldmessages/*
 /build/*
 /dist/*
 /src/server/node_modules/*
