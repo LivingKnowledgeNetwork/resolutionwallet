@@ -8,15 +8,16 @@
 * @license    http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
 * @version    $Id$
 */
-var util = require('util');
-var fs = require('fs');
-var events = require("events");
-var kad = require('kad');
-var traverse = require('kad-traverse');
-var KadLocalStorage = require('kad-localstorage');
-var messageFiles = require('kad-fs');
-var crypto = require('crypto');
-var getIP = require('external-ip')();
+const util = require('util');
+const fs = require('fs');
+const path = require('path')
+const events = require("events");
+const kad = require('kad');
+const traverse = require('kad-traverse');
+const KadLocalStorage = require('kad-localstorage');
+const messageFiles = require('kad-fs');
+const crypto = require('crypto');
+const getIP = require('external-ip')();
 
 var KAD = function() {
 
@@ -24,6 +25,19 @@ var KAD = function() {
   this.ipPublic = '';
 	events.EventEmitter.call(this);
   this.getpublicIP();
+/*
+  var apppath = app.getAppPath();
+console.log(apppath);
+  newpathFile = apppath + '/src/server/';
+  var pathdir = app.getPath('home');
+console.log(pathdir);
+
+  var setpath = app.setPath('home', newpathFile)
+console.log(setpath);
+*/
+  this.pathdir =  path.join(__dirname, '/');// __dirname;///app.getPath('home');
+console.log('kad path local');
+console.log(this.pathdir);
 
 };
 
@@ -89,7 +103,7 @@ KAD.prototype.startDHT = function(portIn) {
 
   this.dht = new kad.Node({
     transport: transportlive,
-    storage: kad.storage.FS('datadir'),
+    storage: kad.storage.FS(this.pathdir + '/datadir'),
     validator: 'somethingtocheck'
     //storage: new KadLocalStorage('label')
   });
@@ -133,7 +147,8 @@ KAD.prototype.listLocalMessages = function() {
 
   // try and read all message files in directory
   var localthis = this;
-  var testlstore = new messageFiles('./datadir');
+  var absolutefilepath = localthis.pathdir + 'datadir';
+  var testlstore = new messageFiles(absolutefilepath);
   var listfiles = '';
 
   setInterval(function(){
@@ -146,8 +161,8 @@ KAD.prototype.listLocalMessages = function() {
       // remove messge from this directory
       if(textData.key)
       {
-        var livetextfile = './datadir/' + textData.key;
-        var moveoldstring = './oldmessages/' + textData.key;
+        var livetextfile = localthis.pathdir + 'datadir/' + textData.key;
+        var moveoldstring = localthis.pathdir + 'oldmessages/' + textData.key;
         fs.rename(livetextfile, moveoldstring, function (err) {
           if (err) throw err;
           console.log('Move complete.');
