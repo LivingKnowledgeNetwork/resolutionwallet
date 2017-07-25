@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="css/gaiasoulstyle.css">
 
 		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-		<script type="text/javascript" src="start.js"></script>
+
 			<script src="socket.io.js"></script>
 
 		<style>
@@ -20,6 +20,7 @@
 </head>
 
 <body>
+	<script src="./server/node_modules/pouchdb/dist/pouchdb.js"></script>
 	<header>
 		<img id="quoteslogo" src="images/lknlogo.png"> Resolution Wallet
 		<div id="attention-focus">
@@ -37,6 +38,19 @@
 			<a href="" id="authorisation-in">Sign-in</a>
 		</div>
 	</header>
+
+	<h1>PouchDB &#9829; Electron</h1>
+	We are using
+	<ul>
+		<li>Node.js <script>document.write(process.version)</script></li>
+		<li>Electron <script>document.write(process.versions.electron)</script></li>
+		<li>PouchDB <script>document.write(PouchDB.version)</script></li>
+	</ul>
+
+	<div id="idb"></div>
+	<div id="websql"></div>
+	<div id="leveldb"></div>
+	<div id="sqlitedb"></div>
 
 <!--	<section id="gaiasoul">
 		<nav id="select-gaiasoul-view">
@@ -166,7 +180,7 @@
 
 	<section id="ptop-view">
 		<div id="lkn-start-cycle">
-			<span id="dht-new-message"><input id="lkn-cycle-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-start-cycle" href="" >Start cycle</a>
+			<span id="dht-new-message"><input id="lkn-cycle-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-start-cycle" href="" >Start</a>
 		</div>
 		<div id="lkn-start-datamodel">
 			<span id="dht-new-message"><input id="lkn-datamodel-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-datamodel" href="" >Set datamodel</a>
@@ -386,7 +400,7 @@
 		<p>Status Messages</p>
 	</div>
 </section>
-
+		<script type="text/javascript" src="start.js"></script>
 </body>
 
 </html>

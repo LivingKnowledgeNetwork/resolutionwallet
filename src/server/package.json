@@ -1,11 +1,17 @@
 {
   "dependencies": {
+    "pouchdb": "^6.1.0",
+    "pouchdb-adapter-node-websql": "^6.1.0",
     "socket.io": "1.7.3",
     "external-ip": "^0.2.4",
     "kad": "^1.6.1",
-    "kad-traverse": "0.0.4"
+    "kad-traverse": "0.0.4",
+    "leveldown": "^1.4.1",
+    "levelup": "^1.2.1"
+
   },
   "devDependencies": {
-
+    "electron": "1.4.12",
+    "electron-rebuild": "^1.5.11"
   }
 }

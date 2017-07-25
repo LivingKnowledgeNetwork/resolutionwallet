@@ -15,6 +15,7 @@ const fs = require('fs');
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
+var localLevel = require("./levellocal.js");
 
 /**
 * controls start of node.js server
@@ -23,7 +24,9 @@ const peertopeer = require('./peertopeer.js');
 */
 function start(route, handle) {
 
+  liveLocal = new localLevel();  
   PeertoPeer = new peertopeer();
+
 
 	var app = http.createServer(onRequest).listen(8822);
 console.log('server up');

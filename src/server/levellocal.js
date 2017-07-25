@@ -14,7 +14,7 @@ var events = require("events");
 var fs = require('fs');
 var level = require('levelup');
 var leveldown = require('leveldown');
-var solc = require('solc');
+//var solc = require('solc');
 
 var levelLocal = function() {
 

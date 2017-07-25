@@ -61,7 +61,7 @@ peerTopeer.prototype.startDHTkad = function(portIN) {
 
 	var localthis = this;
 	//this.liveDHT.startDHT(portIN);
-	this.liveDHT.listLocalMessages();
+	//this.liveDHT.listLocalMessages();
 
 	this.liveDHT.on("newMfile", function(newFileIN) {
 

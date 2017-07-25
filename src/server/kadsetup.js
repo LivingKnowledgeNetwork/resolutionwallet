@@ -15,7 +15,7 @@ const events = require("events");
 const kad = require('kad');
 const traverse = require('kad-traverse');
 const KadLocalStorage = require('kad-localstorage');
-const messageFiles = require('kad-fs');
+//const messageFiles = require('kad-fs');
 const crypto = require('crypto');
 const getIP = require('external-ip')();
 
