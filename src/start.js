@@ -53,6 +53,12 @@ console.log(idclick);
 
 			break;
 
+			case "get-lkn":
+				//send a message to server to connect to peer to peer Network
+				socketpi.emit('LKN', 'get-latest');
+
+			break;
+
 			case "lkn-start-cycle":
 				//send a message to server to connect to peer to peer Network
 				var messageContent = {};

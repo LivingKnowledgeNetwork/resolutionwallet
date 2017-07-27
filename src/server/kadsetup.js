@@ -117,7 +117,7 @@ this.dht = new kad.Node({
   	seedData.port = 8816;
   	var messagePtoP = {};
   	messagePtoP.type = 'join';
-  	messagePtoP.text = 'Welcome to LKN JL';
+  	messagePtoP.text = 'Welcome to LKN';
   	var serialisemessage = JSON.stringify(messagePtoP);
   	seedData.sendmessage = serialisemessage;
     localthis.seedSingle(seedData);

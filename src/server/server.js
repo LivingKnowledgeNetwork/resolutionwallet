@@ -71,8 +71,12 @@ console.log('server up');
 			}
 			else if(dataIN == "seed")
 			{
-				//PeertoPeer.seedDHTkad();
+				//PeertoPeer.seedDHTkad();  //now automatic
 			}
+      if(dataIN == "get-latest")
+      {
+        livepouch.createReadStreamStart(localthis);
+      }
 			else if(dataIN == "readm")
 			{
 				PeertoPeer.readmDHTkad();
