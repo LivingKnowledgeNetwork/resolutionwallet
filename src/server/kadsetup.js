@@ -14,30 +14,19 @@ const path = require('path')
 const events = require("events");
 const kad = require('kad');
 const traverse = require('kad-traverse');
-const KadLocalStorage = require('kad-localstorage');
+//const KadLocalStorage = require('kad-localstorage');
 //const messageFiles = require('kad-fs');
 const crypto = require('crypto');
 const getIP = require('external-ip')();
 
-var KAD = function() {
+var KAD = function(livepouch) {
 
+  this.livepouch = livepouch;
   this.dht = {};
   this.ipPublic = '';
 	events.EventEmitter.call(this);
   this.getpublicIP();
-/*
-  var apppath = app.getAppPath();
-console.log(apppath);
-  newpathFile = apppath + '/src/server/';
-  var pathdir = app.getPath('home');
-console.log(pathdir);
-
-  var setpath = app.setPath('home', newpathFile)
-console.log(setpath);
-*/
   this.pathdir =  path.join(__dirname, '/');// __dirname;///app.getPath('home');
-console.log('kad path local');
-console.log(this.pathdir);
 
 };
 
@@ -64,7 +53,8 @@ KAD.prototype.getpublicIP = function() {
     }
 console.log('extippp' + ip);
     localthis.ipPublic = ip;
-    localthis.startDHT(8816)
+    localthis.startDHT(8816);
+
   });
 
 };
@@ -79,8 +69,6 @@ KAD.prototype.startDHT = function(portIn) {
   localthis = this;
 
   var ipaddress =  this.ipPublic;
-  // Decorate your transport
-//console.log('exterip pickedup == ' + ip + 'and port== ' + portnumber);
   // Create your contact
   var contact = kad.contacts.AddressPortContact({
     address: ipaddress,
@@ -103,7 +91,7 @@ KAD.prototype.startDHT = function(portIn) {
 
   this.dht = new kad.Node({
     transport: transportlive,
-    storage: kad.storage.FS(this.pathdir + '/datadir'),
+    storage: localthis.livepouch,//kad.storage.FS(this.pathdir + '/datadir'),
     validator: 'somethingtocheck'
     //storage: new KadLocalStorage('label')
   });
@@ -126,14 +114,14 @@ this.dht = new kad.Node({
   {
     var seedData = {};
   	seedData.ip = '52.4.43.80';//'188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
-  	seedData.port = 3333;
+  	seedData.port = 8816;
   	var messagePtoP = {};
   	messagePtoP.type = 'join';
-  	messagePtoP.text = 'Welcome to LKN Network';
+  	messagePtoP.text = 'Welcome to LKN JL';
   	var serialisemessage = JSON.stringify(messagePtoP);
   	seedData.sendmessage = serialisemessage;
     localthis.seedSingle(seedData);
-
+    localthis.listLocalMessages();
   }
 
 };
@@ -147,36 +135,12 @@ KAD.prototype.listLocalMessages = function() {
 
   // try and read all message files in directory
   var localthis = this;
-  var absolutefilepath = localthis.pathdir + 'datadir';
-  var testlstore = new messageFiles(absolutefilepath);
-  var listfiles = '';
-
-  setInterval(function(){
-    listfiles = testlstore.createReadStream();
-    var returmesfiledata = [];
-    // every time "data" is read, this event fires
-    listfiles.on('data', function(textData) {
-
-      localthis.emit("newMfile", textData.value);
-      // remove messge from this directory
-      if(textData.key)
-      {
-        var livetextfile = localthis.pathdir + 'datadir/' + textData.key;
-        var moveoldstring = localthis.pathdir + 'oldmessages/' + textData.key;
-        fs.rename(livetextfile, moveoldstring, function (err) {
-          if (err) throw err;
-          console.log('Move complete.');
-        });
-      }
-
-    });
-
-      // the reading is finished...
-      listfiles.on('close', function (textData) {
-
-      });
-
-	}	,14)
+  // first get existing messages to display
+  setTimeout(function(){
+    localthis.livepouch.createReadStreamStart(localthis);
+  }, 4000);
+  console.log('start of changes listening>>>');
+  localthis.livepouch.createReadStream(localthis);
 
 };
 
@@ -194,8 +158,6 @@ KAD.prototype.seedSingle = function(seedIn) {
     address: seedIn.ip,
     port: 8816
   };
-console.log(seed);
-  var localthis = this;
   this.dht.connect(seed, function(err) {
 console.log('begin seed connection');
     var key = hashkey;
@@ -223,6 +185,7 @@ KAD.prototype.putMessage = function(keyID, message) {
 
   this.dht.put(keymid, message, function() {
 console.log('sent message to peers');
+
     });
 
 };

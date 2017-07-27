@@ -1079,8 +1079,6 @@ console.log('permission grant storeage contract ID =====');
 
 	socketpi.on('new-lkn-message', function (lknmessageIn) {
 		// which cycle belongs too?
-console.log(lknmessageIn);
-
 		if(lknmessageIn.lkn == 'start')
 		{
 			var lkncycle = '';
@@ -1119,6 +1117,14 @@ console.log(lknmessageIn);
 
 	});
 
+	livepouch = new pouchdbSettings();
+	// save in context of tool knowledge template name
+	var savedatatool = {};
+	savedatatool.tooltemplate = 'Worldrecord-template';
+	savedatatool.lifedata = 777.99;
+	livepouch.singleSave(savedatatool);
+	var datap = livepouch.allDocs();
+console.log('data plsease');
 });
 
 (function () {

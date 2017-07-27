@@ -6,12 +6,11 @@
     "external-ip": "^0.2.4",
     "kad": "^1.6.1",
     "kad-traverse": "0.0.4",
-    "leveldown": "^1.4.1",
-    "levelup": "^1.2.1"
-
+    "leveldown": "1.5.0",
+    "levelup": "1.3.8"
   },
   "devDependencies": {
-    "electron": "1.4.12",
-    "electron-rebuild": "^1.5.11"
+    "electron": "1.6.11",
+    "electron-rebuild": "^1.4.0"
   }
 }

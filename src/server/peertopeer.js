@@ -13,12 +13,12 @@ var events = require("events");
 var kadsetup = require('./kadsetup.js');
 var net = require('net');
 
-var peerTopeer = function() {
+var peerTopeer = function(livepouch) {
 console.log('peer to peer live class');
 	events.EventEmitter.call(this);
 	this.livepublicIP = '';
 	this.liveethpk = '';
- 	this.liveDHT = new kadsetup();
+ 	this.liveDHT = new kadsetup(livepouch);
 	this.startDHTkad(8816)
 
 
@@ -36,8 +36,6 @@ util.inherits(peerTopeer, events.EventEmitter);
 *
 */
 peerTopeer.prototype.publicIPaddress = function() {
-
-	//this.livepublicIP = this.liveDHT.getpublicIP();
 
 };
 
@@ -60,8 +58,6 @@ peerTopeer.prototype.setEthpk = function(ekeyIN) {
 peerTopeer.prototype.startDHTkad = function(portIN) {
 
 	var localthis = this;
-	//this.liveDHT.startDHT(portIN);
-	//this.liveDHT.listLocalMessages();
 
 	this.liveDHT.on("newMfile", function(newFileIN) {
 

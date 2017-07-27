@@ -15,7 +15,7 @@ const fs = require('fs');
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
-var localLevel = require("./levellocal.js");
+var pouchdbServer = require('./pouchdb-utility.js');
 
 /**
 * controls start of node.js server
@@ -24,8 +24,15 @@ var localLevel = require("./levellocal.js");
 */
 function start(route, handle) {
 
-  liveLocal = new localLevel();  
-  PeertoPeer = new peertopeer();
+  livepouch = new pouchdbServer();
+  // save in context of tool knowledge template name
+  //var savedatatool = {};
+  //savedatatool.tooltemplate = 'Worldrecord-template';
+  //savedatatool.lifedata = 444.666;
+  //livepouch.post(savedatatool);
+  //var datap = livepouch.createReadStream();
+  //console.log('data plseasddde');
+  PeertoPeer = new peertopeer(livepouch);
 
 
 	var app = http.createServer(onRequest).listen(8822);
