@@ -12,6 +12,7 @@ var util = require('util');
 var events = require("events");
 var kadsetup = require('./kadsetup.js');
 var net = require('net');
+const crypto = require('crypto');
 
 var peerTopeer = function(livepouch) {
 console.log('peer to peer live class');
@@ -97,6 +98,13 @@ peerTopeer.prototype.seedDHTkad = function() {
 */
 peerTopeer.prototype.sendmDHTkad = function(textIN) {
 
+  function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  }
+  var date = randomDate(new Date(2012, 0, 1), new Date())
+  var uuidm = textIN + date;
+  var hashkey = crypto.createHash('md5').update(uuidm).digest('hex');
+
 	var messagePtoP = {};
 	messagePtoP.type = textIN.type;
 	messagePtoP.lkn = textIN.lkn
@@ -104,7 +112,7 @@ peerTopeer.prototype.sendmDHTkad = function(textIN) {
 	messagePtoP.text = textIN.text
 	var serialisemessage = JSON.stringify(messagePtoP);
 
-	this.liveDHT.putMessage('', serialisemessage);
+	this.liveDHT.putMessage(hashkey, serialisemessage);
 
 };
 

@@ -103,18 +103,13 @@ console.log(response);
 */
 pouchdbServer.prototype.put = function(mesgInkey, content) {
 console.log('start of put');
+console.log(mesgInkey);
+console.log(content);
 	var designDoc = {};
 	designDoc = {
 	_id: mesgInkey,
 	title: content
 };
-console.log(designDoc);
-console.log('after design doc');
-	/*this.livepouch.put({
-		_id: 'mydoc',
-		_rev: '1-A6157A5EA545C99B00FF904EEF05FD9F',
-		title: 'Lets Dance',
-	}, function(err, response) { })*/
 
 	this.livepouch.put(designDoc, function(err, response) {
 

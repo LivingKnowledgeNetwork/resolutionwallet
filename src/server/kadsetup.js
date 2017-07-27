@@ -14,7 +14,7 @@ const path = require('path')
 const events = require("events");
 const kad = require('kad');
 const traverse = require('kad-traverse');
-//const KadLocalStorage = require('kad-localstorage');
+const KadLocalStorage = require('kad-localstorage');
 //const messageFiles = require('kad-fs');
 const crypto = require('crypto');
 const getIP = require('external-ip')();
@@ -136,9 +136,9 @@ KAD.prototype.listLocalMessages = function() {
   // try and read all message files in directory
   var localthis = this;
   // first get existing messages to display
-  setTimeout(function(){
-    localthis.livepouch.createReadStreamStart(localthis);
-  }, 4000);
+  //setTimeout(function(){
+  //localthis.livepouch.createReadStreamStart(localthis);
+  //}, 4000);
   console.log('start of changes listening>>>');
   localthis.livepouch.createReadStream(localthis);
 
@@ -152,7 +152,12 @@ KAD.prototype.listLocalMessages = function() {
 KAD.prototype.seedSingle = function(seedIn) {
 
   var localthis = this;
-  var hashkey = crypto.createHash('md5').update(seedIn.sendmessage).digest('hex');
+  function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  }
+  var date = randomDate(new Date(2012, 0, 1), new Date())
+  var uuidm = seedIn.sendmessage + date;
+  var hashkey = crypto.createHash('md5').update(uuidm).digest('hex');
 
   var seed = {
     address: seedIn.ip,
@@ -162,7 +167,7 @@ KAD.prototype.seedSingle = function(seedIn) {
 console.log('begin seed connection');
     var key = hashkey;
     var message = seedIn.sendmessage;
-    localthis.putMessage(key, message);
+    //localthis.putMessage(key, message);
 
   });
 
@@ -175,15 +180,8 @@ console.log('begin seed connection');
 *
 */
 KAD.prototype.putMessage = function(keyID, message) {
-
-  var keymid = keyID;
-  if(keyID.length == 0)
-  {
-      var hashkey = crypto.createHash('md5').update(message).digest('hex');
-      keymid = hashkey;
-  }
-
-  this.dht.put(keymid, message, function() {
+console.log('put mmmmmmmmmmmmmmage');
+  this.dht.put(keyID, message, function() {
 console.log('sent message to peers');
 
     });
