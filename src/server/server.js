@@ -68,7 +68,7 @@ console.log('server up');
 			}
       if(dataIN == "get-latest")
       {
-        //livepouch.createReadStreamStart(localthis);
+        PeertoPeer.getKnowledge();
       }
 			else if(dataIN == "readm")
 			{

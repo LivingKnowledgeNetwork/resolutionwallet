@@ -129,7 +129,19 @@ this.dht = new kad.Node({
 };
 
 /**
-*  get a list of all current messages
+*  get current knowledge in network
+* @method currentKnowledge
+*
+*/
+KAD.prototype.currentKnowledge = function() {
+
+  var localthis = this;
+	this.livepouch.createReadStreamStart(localthis);
+
+};
+
+/**
+*  put change listener on all changes to pouchdb
 * @method listLocalMessages
 *
 */

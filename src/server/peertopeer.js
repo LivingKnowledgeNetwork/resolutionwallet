@@ -75,6 +75,17 @@ peerTopeer.prototype.startDHTkad = function(portIN) {
 };
 
 /**
+*  display existing knowledge to UI
+* @method getKnowledge
+*
+*/
+peerTopeer.prototype.getKnowledge = function() {
+
+	this.liveDHT.currentKnowledge();
+
+};
+
+/**
 *  seed Peer to Peer network connections
 * @method seedDHTkad
 *
