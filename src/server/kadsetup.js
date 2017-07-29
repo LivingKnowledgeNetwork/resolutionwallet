@@ -14,8 +14,8 @@ const path = require('path')
 const events = require("events");
 const kad = require('kad');
 const traverse = require('kad-traverse');
-const KadLocalStorage = require('kad-localstorage');
-const messageFiles = require('kad-fs');
+//const KadLocalStorage = require('kad-localstorage');
+//const messageFiles = require('kad-fs');
 const crypto = require('crypto');
 const getIP = require('external-ip')();
 var pouchdbServer = require('./pouchdb-utility.js');
@@ -23,7 +23,7 @@ var pouchdbServer = require('./pouchdb-utility.js');
 var KAD = function() {
 
   this.dht = {};
-  this.livepouch = new pouchdbServer();
+  this.liveUtil = new pouchdbServer();
   this.ipPublic = '';
 	events.EventEmitter.call(this);
   this.getpublicIP();
@@ -90,41 +90,38 @@ KAD.prototype.startDHT = function(portIn) {
                  port: 3478 }
   }
   });
-
+console.log(localthis.livepouch);
   this.dht = new kad.Node({
     transport: transportlive,
-    storage: localthis.livepouch,//kad.storage.FS(this.pathdir + '/datadir'),
+    storage: localthis.liveUtil,
     validator: 'somethingtocheck'
-    //storage: new KadLocalStorage('label')
   });
-/*
-// local DHT network setup
-var ipaddress =  this.ipPublic;
-// Decorate your transport
-this.dht = new kad.Node({
-  transport: kad.transports.UDP(kad.contacts.AddressPortContact({
-    address: localthis.ipPublic,//'127.0.0.1',
-    port: portIn
 
-    })),
-  storage: kad.storage.FS('datadir'),
-  validator: 'somethingtocheck'
-  //storage: new KadLocalStorage('label')
-  });
-*/
   if(this.dht)
   {
     var seedData = {};
-  	seedData.ip = '52.4.43.80';//'188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
-  	seedData.port = 3333;
+  	seedData.ip = '188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
+  	seedData.port = 8816;
   	var messagePtoP = {};
   	messagePtoP.type = 'join';
   	messagePtoP.text = 'Welcome to LKN Network';
   	var serialisemessage = JSON.stringify(messagePtoP);
   	seedData.sendmessage = serialisemessage;
-    localthis.seedSingle(seedData);
+    //localthis.seedSingle(seedData);
+    var seed = {
+      address: '52.4.43.80',
+      port: 8816
+    };
 
-  }
+    localthis.dht.connect(seed, function(err) {
+  console.log('begin seed connection droplet');
+  console.log(err);
+      //var key = hashkey;
+      //var message = seedIn.sendmessage;
+      //localthis.putMessage(key, message);
+    });
+
+    }
 
 };
 
@@ -136,7 +133,7 @@ this.dht = new kad.Node({
 KAD.prototype.currentKnowledge = function() {
 
   var localthis = this;
-	this.livepouch.createReadStreamStart(localthis);
+	this.liveUtil.createReadStreamStart(localthis);
 
 };
 
@@ -149,39 +146,8 @@ KAD.prototype.listLocalMessages = function() {
 
   // try and read all message files in directory
   var localthis = this;
-  localthis.livepouch.createReadStream(localthis);
-/*
-  var absolutefilepath = localthis.pathdir + 'datadir';
-  var testlstore = new messageFiles(absolutefilepath);
-  var listfiles = '';
+  localthis.liveUtil.createReadStreamChanges(localthis);
 
-  setInterval(function(){
-    listfiles = testlstore.createReadStream();
-    var returmesfiledata = [];
-    // every time "data" is read, this event fires
-    listfiles.on('data', function(textData) {
-
-      localthis.emit("newMfile", textData.value);
-      // remove messge from this directory
-      if(textData.key)
-      {
-        var livetextfile = localthis.pathdir + 'datadir/' + textData.key;
-        var moveoldstring = localthis.pathdir + 'oldmessages/' + textData.key;
-        fs.rename(livetextfile, moveoldstring, function (err) {
-          if (err) throw err;
-          console.log('Move complete.');
-        });
-      }
-
-    });
-
-      // the reading is finished...
-      listfiles.on('close', function (textData) {
-
-      });
-
-	}	,14)
-*/
 };
 
 /**
@@ -198,15 +164,24 @@ KAD.prototype.seedSingle = function(seedIn) {
     address: seedIn.ip,
     port: 8816
   };
-console.log(seed);
-  var localthis = this;
-  this.dht.connect(seed, function(err) {
-console.log('begin seed connection');
-    var key = hashkey;
-    var message = seedIn.sendmessage;
-    localthis.putMessage(key, message);
+
+  localthis.dht.connect(seed, function(err) {
+console.log('begin seed connection droplet');
+console.log(err);
+    //var key = hashkey;
+    //var message = seedIn.sendmessage;
+    //localthis.putMessage(key, message);
 
   });
+
+    var seed2 = {
+        address: '52.4.43.80',
+        port: 8816
+      };
+    localthis.dht.connect(seed, function(err) {
+  console.log('begin seed connection ec2');
+console.log(err);
+    });
 
 };
 

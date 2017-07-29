@@ -15,7 +15,6 @@ const fs = require('fs');
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
-//var pouchdbServer = require('./pouchdb-utility.js');
 
 /**
 * controls start of node.js server
@@ -24,7 +23,6 @@ const peertopeer = require('./peertopeer.js');
 */
 function start(route, handle) {
 
-  //livepouch = new pouchdbServer();
   PeertoPeer = new peertopeer();
 
 
@@ -58,8 +56,7 @@ console.log('server up');
 
 			if(dataIN == "start")
 			{
-				PeertoPeer.startDHTkad(8816);
-				socket.emit('dhtlive', "DHT started");
+				//socket.emit('dhtlive', "DHT started");
 
 			}
 			else if(dataIN == "seed")

@@ -16,9 +16,8 @@ var PouchDB = require('pouchdb');
 * @class pouchdbSettings
 */
 var pouchdbServer = function() {
-	this.account = {};
-	this.livepouch = this.createPouchdb();
 
+	this.livepouch = new PouchDB('rw-store');
 };
 
 /**
@@ -28,8 +27,7 @@ var pouchdbServer = function() {
 */
 pouchdbServer.prototype.createPouchdb = function() {
 
-	db = new PouchDB('rw-store');
-	return db;
+
 
 };
 
@@ -52,7 +50,7 @@ pouchdbServer.prototype.bulkSave = function(datain) {
 *
 */
 pouchdbServer.prototype.post = function(datain) {
-
+console.log('post at ouch');
 	this.livepouch.post(datain, function (err, response) {
 
 	});
@@ -65,32 +63,15 @@ pouchdbServer.prototype.updateSingle = function(datain) {
 };
 
 /**
-* get list of all pouchdb documents
-* @method allDocs
-*
-*/
-pouchdbServer.prototype.createReadStreamStart = function(thisIN) {
-
-		this.livepouch.allDocs({include_docs: true}, function(err, response) {
-console.log('all current docs');
-			response.rows.forEach(function(newMes){;
-			 thisIN.emit("newMfile", newMes.doc.title);
-
-		});
-	});
-
-
-};
-
-/**
 * get data on one pouchdb document
 * @method getDoc
 *
 */
-pouchdbServer.prototype.get = function(docid) {
-
+pouchdbServer.prototype.get = function(docid, cb) {
+console.log('get being call at pourch');
 		this.livepouch.get(docid, function(err, response) {
 //console.log(response);
+				cb(null, response);
 
 			});
 
@@ -101,7 +82,8 @@ pouchdbServer.prototype.get = function(docid) {
 * @method putDoc
 *
 */
-pouchdbServer.prototype.put = function(mesgInkey, content) {
+pouchdbServer.prototype.put = function(mesgInkey, content, cb) {
+console.log('PUT being call at pourch');
 	var designDoc = {};
 	designDoc = {
 	_id: mesgInkey,
@@ -109,8 +91,11 @@ pouchdbServer.prototype.put = function(mesgInkey, content) {
 };
 
 	this.livepouch.put(designDoc, function(err, response) {
+console.log(response);
+console.log(err);
+		cb(null, response.id)
 
-		});
+	});
 
 };
 
@@ -119,11 +104,70 @@ pouchdbServer.prototype.put = function(mesgInkey, content) {
 * @method deleteDoc
 *
 */
-pouchdbServer.prototype.del = function(docid) {
+pouchdbServer.prototype.del = function(docid, cb) {
 
-	this.livepouch.get(docid, function(err, doc) {
-		db.remove(doc, function(err, response) { });
+	this.livepouch.remove(docid, function(err, doc) {
+
+			cb(null);
 	});
+
+};
+
+/**
+* get list of all pouchdb documents
+* @method allDocs
+*
+*/
+pouchdbServer.prototype.createReadStream = function(thisIN) {
+console.log('read stream being pouch');
+		var localthis = this;
+		this.livepouch.allDocs({include_docs: true}, function(err, response) {
+console.log('all current docs');
+
+			response.rows.forEach(function(newMes){;
+			 thisIN.emit("newMfile", newMes.doc.title);
+			 localthis.emit('data', { key: newMes._id, value: newMes.doc.title });
+		});
+	});
+
+};
+
+/**
+* get list of all pouchdb documents
+* @method allDocs
+*
+*/
+pouchdbServer.prototype.createReadStreamStart = function(thisIN) {
+console.log('read stream being pouch');
+		var localthis = this;
+		this.livepouch.allDocs({include_docs: true}, function(err, response) {
+console.log('all current docs');
+
+			response.rows.forEach(function(newMes){;
+			 thisIN.emit("newMfile", newMes.doc.title);
+		});
+	});
+
+};
+
+/**
+* list changes on pouchdb log
+* @method changeLog
+*
+*/
+pouchdbServer.prototype.createReadStreamChanges = function(thisIN) {
+console.log('start readstream changes');
+		var newLKNM = this.livepouch.changes({
+			since: 'now',
+			live: true,
+			include_docs: true
+	}).on('change', function(change) {
+	  // handle change
+		thisIN.emit("newMfile", change.doc.title);
+
+	}).on('error', function (err) {
+console.log(err);
+});
 
 };
 
@@ -203,28 +247,6 @@ pouchdbServer.prototype.mapQueryLIVE = function(callbackin) {
 //console.log(response);
 				callbackin(response);
 		});
-
-};
-
-
-/**
-* list changes on pouchdb log
-* @method changeLog
-*
-*/
-pouchdbServer.prototype.createReadStream = function(thisIN) {
-console.log('start readstream changes');
-		var newLKNM = this.livepouch.changes({
-			since: 'now',
-			live: true,
-			include_docs: true
-	}).on('change', function(change) {
-	  // handle change
-		thisIN.emit("newMfile", change.doc.title);
-
-	}).on('error', function (err) {
-console.log(err);
-});
 
 };
 

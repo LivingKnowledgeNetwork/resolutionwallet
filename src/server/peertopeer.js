@@ -19,7 +19,7 @@ console.log('peer to peer live class');
 	this.livepublicIP = '';
 	this.liveethpk = '';
  	this.liveDHT = new kadsetup();
-	this.startDHTkad(8816)
+	this.filterDHTkad();
 
 
 };
@@ -53,14 +53,13 @@ peerTopeer.prototype.setEthpk = function(ekeyIN) {
 };
 
 /**
-*  connect to the DHT kad
+*  listen for new messages to filter
 * @method startDHTkad
 *
 */
-peerTopeer.prototype.startDHTkad = function(portIN) {
+peerTopeer.prototype.filterDHTkad = function(portIN) {
 
 	var localthis = this;
-	//this.liveDHT.startDHT(portIN);
 	this.liveDHT.listLocalMessages();
 
 	this.liveDHT.on("newMfile", function(newFileIN) {
@@ -87,27 +86,7 @@ peerTopeer.prototype.getKnowledge = function() {
 
 /**
 *  seed Peer to Peer network connections
-* @method seedDHTkad
-*
-*/
-peerTopeer.prototype.seedDHTkad = function() {
-
-	var seedData = {};
-	seedData.ip = '127.0.0.1';  // need list of peers
-	seedData.port = 8816;
-	var messagePtoP = {};
-	messagePtoP.type = 'join';
-	messagePtoP.text = 'Welcome to Network';
-	var serialisemessage = JSON.stringify(messagePtoP);
-	seedData.sendmessage = serialisemessage;
-
-	this.liveDHT.seedSingle(seedData);
-
-};
-
-/**
-*  seed Peer to Peer network connections
-* @method seedDHTkad
+* @method seedmDHTkad
 *
 */
 peerTopeer.prototype.sendmDHTkad = function(textIN) {
@@ -125,7 +104,7 @@ peerTopeer.prototype.sendmDHTkad = function(textIN) {
 
 /**
 *  seed Peer to Peer network connections
-* @method seedDHTkad
+* @method readmDHTkad
 *
 */
 peerTopeer.prototype.readmDHTkad = function() {
