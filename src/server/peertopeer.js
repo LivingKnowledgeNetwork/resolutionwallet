@@ -12,14 +12,13 @@ var util = require('util');
 var events = require("events");
 var kadsetup = require('./kadsetup.js');
 var net = require('net');
-const crypto = require('crypto');
 
-var peerTopeer = function(livepouch) {
+var peerTopeer = function() {
 console.log('peer to peer live class');
 	events.EventEmitter.call(this);
 	this.livepublicIP = '';
 	this.liveethpk = '';
- 	this.liveDHT = new kadsetup(livepouch);
+ 	this.liveDHT = new kadsetup();
 	this.startDHTkad(8816)
 
 
@@ -37,6 +36,8 @@ util.inherits(peerTopeer, events.EventEmitter);
 *
 */
 peerTopeer.prototype.publicIPaddress = function() {
+
+	//this.livepublicIP = this.liveDHT.getpublicIP();
 
 };
 
@@ -59,6 +60,8 @@ peerTopeer.prototype.setEthpk = function(ekeyIN) {
 peerTopeer.prototype.startDHTkad = function(portIN) {
 
 	var localthis = this;
+	//this.liveDHT.startDHT(portIN);
+	this.liveDHT.listLocalMessages();
 
 	this.liveDHT.on("newMfile", function(newFileIN) {
 
@@ -98,13 +101,6 @@ peerTopeer.prototype.seedDHTkad = function() {
 */
 peerTopeer.prototype.sendmDHTkad = function(textIN) {
 
-  function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  }
-  var date = randomDate(new Date(2012, 0, 1), new Date())
-  var uuidm = textIN + date;
-  var hashkey = crypto.createHash('md5').update(uuidm).digest('hex');
-
 	var messagePtoP = {};
 	messagePtoP.type = textIN.type;
 	messagePtoP.lkn = textIN.lkn
@@ -112,7 +108,7 @@ peerTopeer.prototype.sendmDHTkad = function(textIN) {
 	messagePtoP.text = textIN.text
 	var serialisemessage = JSON.stringify(messagePtoP);
 
-	this.liveDHT.putMessage(hashkey, serialisemessage);
+	this.liveDHT.putMessage('', serialisemessage);
 
 };
 

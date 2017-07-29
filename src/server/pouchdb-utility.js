@@ -74,7 +74,7 @@ pouchdbServer.prototype.createReadStreamStart = function(thisIN) {
 		this.livepouch.allDocs({include_docs: true}, function(err, response) {
 console.log('all current docs');
 			response.rows.forEach(function(newMes){;
-			thisIN.emit("newMfile", newMes.doc.title);
+			 thisIN.emit("newMfile", newMes.doc.title);
 
 		});
 	});
@@ -90,7 +90,7 @@ console.log('all current docs');
 pouchdbServer.prototype.get = function(docid) {
 
 		this.livepouch.get(docid, function(err, response) {
-console.log(response);
+//console.log(response);
 
 			});
 
@@ -102,9 +102,6 @@ console.log(response);
 *
 */
 pouchdbServer.prototype.put = function(mesgInkey, content) {
-console.log('start of put');
-console.log(mesgInkey);
-console.log(content);
 	var designDoc = {};
 	designDoc = {
 	_id: mesgInkey,
@@ -113,8 +110,6 @@ console.log(content);
 
 	this.livepouch.put(designDoc, function(err, response) {
 
-console.log(response);
-console.log(err);
 		});
 
 };

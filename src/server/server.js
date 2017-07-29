@@ -15,7 +15,7 @@ const fs = require('fs');
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
-var pouchdbServer = require('./pouchdb-utility.js');
+//var pouchdbServer = require('./pouchdb-utility.js');
 
 /**
 * controls start of node.js server
@@ -24,15 +24,8 @@ var pouchdbServer = require('./pouchdb-utility.js');
 */
 function start(route, handle) {
 
-  livepouch = new pouchdbServer();
-  // save in context of tool knowledge template name
-  //var savedatatool = {};
-  //savedatatool.tooltemplate = 'Worldrecord-template';
-  //savedatatool.lifedata = 444.666;
-  //livepouch.post(savedatatool);
-  //var datap = livepouch.createReadStream();
-  //console.log('data plseasddde');
-  PeertoPeer = new peertopeer(livepouch);
+  //livepouch = new pouchdbServer();
+  PeertoPeer = new peertopeer();
 
 
 	var app = http.createServer(onRequest).listen(8822);
@@ -75,7 +68,7 @@ console.log('server up');
 			}
       if(dataIN == "get-latest")
       {
-        livepouch.createReadStreamStart(localthis);
+        //livepouch.createReadStreamStart(localthis);
       }
 			else if(dataIN == "readm")
 			{
