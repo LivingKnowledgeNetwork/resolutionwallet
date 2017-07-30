@@ -3,7 +3,7 @@
 Graphical UI for guardian coll
 ==============================
 
-An experimental learning proof of concept code to assist building a Living Knowledge Network (LKN) protocol. The collaboration ethos is set out at https://docs.google.com/document/d/1xFs83-xVqlPJhRqCuN6bzS-bb7-k2b1cpGlrONnVhqk/edit?usp=sharing  To goal for the LKN protocol is to implement the ethos is code.   As specific functionality is identified and made modular, new code repositories will be setup and aggregated via the shell guardian coll code, https://github.com/LivingKnowledgeNetwork/guardiancoll
+An experimental learning proof of concept code to assist building a Living Knowledge Network (LKN) protocol. The collaboration ethos is set out at https://docs.google.com/document/d/1xFs83-xVqlPJhRqCuN6bzS-bb7-k2b1cpGlrONnVhqk/edit?usp=sharing  The goal for the LKN protocol is to implement the ethos is code.   As specific functionality is identified and made modular, new code repositories will be setup and aggregated via the shell guardian coll code, https://github.com/LivingKnowledgeNetwork/guardiancoll
 
 How to use
 ==========
