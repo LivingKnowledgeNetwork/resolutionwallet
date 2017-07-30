@@ -91,8 +91,8 @@ console.log('PUT being call at pourch');
 };
 
 	this.livepouch.put(designDoc, function(err, response) {
-//console.log(response);
-//console.log(err);
+console.log(response);
+console.log(err);
 		cb(null, response.id)
 
 	});
@@ -142,10 +142,38 @@ console.log('read stream being pouch');
 		var localthis = this;
 		this.livepouch.allDocs({include_docs: true}, function(err, response) {
 console.log('all current docs');
-
-			response.rows.forEach(function(newMes){;
-			 thisIN.emit("newMfile", newMes.doc.title);
+//console.log(response);
+			// need to get start base info first then send updated to template
+			var baseContent = [];
+			var updateContent = [];
+			response.rows.forEach(function(newMes){
+//console.log(newMes.doc.title);
+				var valueData = JSON.parse(newMes.doc.title);
+				var valueData2 = JSON.parse(valueData.value);
+				if(valueData2.lkn == 'start')
+				{
+					//baseContent.push(newMes);
+					thisIN.emit("newMfile", newMes.doc.title);
+				}
+				else
+			  {
+					updateContent.push(newMes);
+console.log('inner content array');
+console.log(updateContent);
+				}
 		});
+
+		setTimeout(function(){
+console.log('start of timeout inner');
+console.log(updateContent);
+			updateContent.forEach(function(updateMes){
+console.log('each chunk inner');
+console.log(updateMes);
+				thisIN.emit("newMfile", updateMes.doc.title);
+
+			});
+
+		}, 2000);
 	});
 
 };

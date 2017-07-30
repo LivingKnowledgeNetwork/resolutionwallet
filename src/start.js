@@ -56,6 +56,7 @@ console.log(idclick);
 			case "get-lkn":
 				//send a message to server to connect to peer to peer Network
 				socketpi.emit('LKN', 'get-latest');
+				$("#network-messages").empty();
 
 			break;
 
@@ -1125,12 +1126,6 @@ console.log('permission grant storeage contract ID =====');
 
 	livepouch = new pouchdbSettings();
 	// save in context of tool knowledge template name
-	var savedatatool = {};
-	savedatatool.tooltemplate = 'Worldrecord-template';
-	savedatatool.lifedata = 777.99;
-	livepouch.singleSave(savedatatool);
-	var datap = livepouch.allDocs();
-console.log('data plsease');
 });
 
 (function () {
