@@ -170,7 +170,6 @@ console.log('filter smart contract message ============== smart contract message
 	else if(messContent.lkn)
 	{
 console.log('LKN protocol input type ----------->');
-console.log(messContent);
 		var lknprocess = messContent.lkn;
 
 		switch(lknprocess){

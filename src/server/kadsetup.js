@@ -14,8 +14,6 @@ const path = require('path')
 const events = require("events");
 const kad = require('kad');
 const traverse = require('kad-traverse');
-//const KadLocalStorage = require('kad-localstorage');
-//const messageFiles = require('kad-fs');
 const crypto = require('crypto');
 const getIP = require('external-ip')();
 var pouchdbServer = require('./pouchdb-utility.js');
@@ -90,7 +88,7 @@ KAD.prototype.startDHT = function(portIn) {
                  port: 3478 }
   }
   });
-console.log(localthis.livepouch);
+
   this.dht = new kad.Node({
     transport: transportlive,
     storage: localthis.liveUtil,
@@ -107,8 +105,8 @@ console.log(localthis.livepouch);
   	messagePtoP.text = 'Welcome to LKN Network';
   	var serialisemessage = JSON.stringify(messagePtoP);
   	seedData.sendmessage = serialisemessage;
-    //localthis.seedSingle(seedData);
-    var seed = {
+    localthis.seedSingle(seedData);
+/*    var seed = {
       address: '52.4.43.80',
       port: 8816
     };
@@ -120,7 +118,7 @@ console.log(localthis.livepouch);
       //var message = seedIn.sendmessage;
       //localthis.putMessage(key, message);
     });
-
+*/
     }
 
 };
@@ -178,7 +176,7 @@ console.log(err);
         address: '52.4.43.80',
         port: 8816
       };
-    localthis.dht.connect(seed, function(err) {
+    localthis.dht.connect(seed2, function(err) {
   console.log('begin seed connection ec2');
 console.log(err);
     });
