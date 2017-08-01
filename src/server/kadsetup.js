@@ -98,7 +98,7 @@ KAD.prototype.startDHT = function(portIn) {
   if(this.dht)
   {
     var seedData = {};
-  	seedData.ip = '188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
+  	seedData.ip = '52.4.43.80';//'188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
   	seedData.port = 8816;
   	var messagePtoP = {};
   	messagePtoP.type = 'join';
