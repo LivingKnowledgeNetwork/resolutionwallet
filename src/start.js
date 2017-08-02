@@ -61,14 +61,8 @@ console.log(idclick);
 			break;
 
 			case "lkn-start-cycle":
-				//send a message to server to connect to peer to peer Network
-				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#lkn-cycle-message.form-dht").val();
-				messageContent.type = 'sendm';
-				messageContent.lkn = 'start';
-				messageContent.cycleid = messageNewstring;
-				messageContent.text = messageNewstring;
-				socketpi.emit('LKN', messageContent);
+				// diplay cycle form inputs
+				$("#k-in-form").show();
 
 			break;
 

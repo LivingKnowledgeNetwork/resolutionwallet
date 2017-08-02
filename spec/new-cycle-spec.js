@@ -19,6 +19,23 @@ casper.then(function() {
 
 });
 
+casper.then(function() {
+  this.test.comment('click new cycle start');
+  this.mouseEvent('click', '#lkn-start-cycle');
+
+});
+
+casper.then(function() {
+	this.test.comment('check cycle form is there and input visable');
+//    casper.test.assertVisible('#k-in-form', 'visible');
+    casper.test.assertExists('#lkn-datamodel-validate', 'the element exists');
+    casper.test.assertExists('#lkn-data-validation', 'the element exists');
+    casper.test.assertExists('#lkn-science-validation', 'the element exists');
+    casper.test.assertExists('#lkn-compute-validation', 'the element exists');
+    casper.test.assertExists('#lkn-kt-consensus', 'the element exists');
+
+});
+
 casper.run(function() {
 
 	this.test.done();
