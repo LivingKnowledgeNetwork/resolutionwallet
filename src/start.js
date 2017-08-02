@@ -24,24 +24,13 @@ console.log(idclick);
 			case "authorisation-in":
 				// sign in authorisation
 				$("#authorisation").show();
-				$("#ptop-view").hide();
 				$("#dmap-view").hide();
-				$("#sensor-data").hide();
-				$("#mindmap").hide();
-				$("#being").hide();
-				$("#ourworld").hide();
-				$("#stream").hide();
 
 			break;
 			case "dmap-list":
 
 				$("#dmap-view").show();
-				$("#sensor-data").hide();
-				$("#mindmap").hide();
-				$("#being").hide();
-				$("#ourworld").hide();
-				$("#stream").hide();
-				$("#ptop-view").hide();
+				$("#k-in-form").hide();
 				$("#authorisation").hide();
 
 				var DmapsLive = '';

@@ -61,3 +61,15 @@ Collaborate and Contribute
 ==========================
 
 Read the LKN ethos and then participate, whether that is thinking, code, documentation or in educating etc.
+
+Testing
+=======
+
+Acceptance Testing:  edit source location of app in package.json
+
+npm test
+
+
+Tools:  CasperJS and phantomjs
+
+Unit testing: Mocha
