@@ -17,9 +17,6 @@ var util = require('util');
 
 var handle = {};
 handle["/"] = requestHandlers.start;
-//handle["/signinmepath"] = requestHandlers.signincheckmepath;
-//handle["/auth"] = requestHandlers.authomevent;
-//handle["/datacors"] = requestHandlers.dataCors;
-//console.log(util.inspect(router));
+
 
 server.start(router.route, handle);

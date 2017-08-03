@@ -9,10 +9,13 @@
     "postinstall": "electron-rebuild",
     "test": "casperjs test spec/ --baseUrl='http://localhost/lkn/code/resolutionwallet/src/index.html'"
   },
+  "engineStrict" : true,
+  "engines" : { "node" : ">6.4.1" },
   "devDependencies": {
     "casperjs": "^1.1.4",
     "electron": "^1.4.12",
     "electron-rebuild": "^1.4.0",
+    "mocha": "^3.5.0",
     "phantomjs": "^2.1.7"
   },
   "dependencies": {

@@ -27,7 +27,8 @@ casper.then(function() {
 
 casper.then(function() {
 	this.test.comment('check cycle form is there and input visable');
-//    casper.test.assertVisible('#k-in-form', 'visible');
+    // need to mock input  callback leveldb/pouchdb
+    casper.test.assertVisible('#k-in-form', 'visible');
     casper.test.assertExists('#lkn-datamodel-validate', 'the element exists');
     casper.test.assertExists('#lkn-data-validation', 'the element exists');
     casper.test.assertExists('#lkn-science-validation', 'the element exists');
