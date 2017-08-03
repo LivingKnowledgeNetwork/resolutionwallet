@@ -10,7 +10,7 @@
 */
 const util = require('util');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
 const events = require("events");
 const kad = require('kad');
 const traverse = require('kad-traverse');
@@ -53,7 +53,7 @@ KAD.prototype.getpublicIP = function() {
     }
 console.log('extippp' + ip);
     localthis.ipPublic = ip;
-    localthis.startDHT(8816)
+    localthis.startDHT(8816);
   });
 
 };
@@ -280,7 +280,7 @@ console.log(rand);
     samplingMessage.nodeID = rand;
     var serialiseDmessage = JSON.stringify(samplingMessage);
     // send message to network id.
-    this.putMessage('', serialiseDmessage)
+    this.putMessage('', serialiseDmessage);
     // call smart contract
     // POLICY WHAT IS THE properties to get a 'random' walk  one hope two hopes, select, jump over, statifed etc.
 };

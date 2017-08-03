@@ -15,6 +15,7 @@ const fs = require('fs');
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
+const uuidv4 = require('uuid/v4');
 
 /**
 * controls start of node.js server
@@ -59,9 +60,10 @@ console.log('server up');
 				socket.emit('g-coll', "guardian-coll-started");
 
 			}
-			else if(dataIN == "seed")
+			else if(dataIN == "start-uuid")
 			{
-				//PeertoPeer.seedDHTkad();  //now automatic
+				var newUUID = uuidv4();
+        socket.emit('return-uuid', newUUID);
 			}
       if(dataIN == "get-latest")
       {

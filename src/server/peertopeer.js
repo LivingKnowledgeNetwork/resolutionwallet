@@ -93,9 +93,9 @@ peerTopeer.prototype.sendmDHTkad = function(textIN) {
 
 	var messagePtoP = {};
 	messagePtoP.type = textIN.type;
-	messagePtoP.lkn = textIN.lkn
+	messagePtoP.lkn = textIN.lkn;
 	messagePtoP.cycleid = textIN.cycleid;
-	messagePtoP.text = textIN.text
+	messagePtoP.text = textIN.text;
 	var serialisemessage = JSON.stringify(messagePtoP);
 
 	this.liveDHT.putMessage('', serialisemessage);

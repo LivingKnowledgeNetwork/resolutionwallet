@@ -30,8 +30,8 @@ function start(fullpath, response) {
 		response.writeHead(200, {"Content-Type": "text/html"});
 
 	  response.end(data);
-	});	
-     
+	});
+
 }
 
 
@@ -42,7 +42,7 @@ function start(fullpath, response) {
 *
 */
 function dataCors(fullpath, response, request, couchin, couchlive, authom) {
-console.log("Request handler for CORS data");	
+console.log("Request handler for CORS data");
 
 		// When dealing with CORS (Cross-Origin Resource Sharing)
 		// requests, the client should pass-through its origin (the
@@ -73,14 +73,14 @@ console.log("Request handler for CORS data");
 			// End the response - we're not sending back any content.
 			return( response.end() );
 		}
-		
+
 		correctpwd = {"data":"success"};
 		checkjson = JSON.stringify(correctpwd);
 		response.setHeader("access-control-allow-origin", origin);
 		response.writeHead(200, {"Content-Type": "application/json"});
-		response.end(checkjson);		
+		response.end(checkjson);
 
-};
+}
 
 
 exports.start = start;

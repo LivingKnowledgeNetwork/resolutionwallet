@@ -93,7 +93,7 @@ console.log('PUT being call at pourch');
 	this.livepouch.put(designDoc, function(err, response) {
 console.log(response);
 console.log(err);
-		cb(null, response.id)
+		cb(null, response.id);
 
 	});
 
@@ -124,7 +124,7 @@ pouchdbServer.prototype.createReadStream = function(thisIN) {
 		this.livepouch.allDocs({include_docs: true}, function(err, response) {
 console.log('all current docs');
 
-			response.rows.forEach(function(newMes){;
+			response.rows.forEach(function(newMes){
 			 thisIN.emit("newMfile", newMes.doc.title);
 			 localthis.emit('data', { key: newMes._id, value: newMes.doc.title });
 		});

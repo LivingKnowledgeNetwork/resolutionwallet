@@ -17,7 +17,7 @@ $(document).ready(function(){
 		e.preventDefault(e);
 		var idclick = $(this).attr("id");
 console.log(idclick);
-		var cycleid = $("#dht-new-message input#lkn-cycle-message.form-dht").val()
+		var cycleid = $("#dht-new-message input#lkn-cycle-message.form-dht").val();
 
 		switch(idclick){
 
@@ -61,7 +61,8 @@ console.log(idclick);
 			break;
 
 			case "lkn-start-cycle":
-				// diplay cycle form inputs
+
+				socketpi.emit('LKN', 'start-uuid');
 				$("#k-in-form").show();
 
 			break;
@@ -80,49 +81,49 @@ console.log(idclick);
 
 			case "lkn-validate-data":
 				//send a message to server to connect to peer to peer Network
-				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#lkn-data-message.form-dht").val();
-				messageContent.type = 'sendm';
-				messageContent.lkn = 'data';
-				messageContent.cycleid = cycleid;
-				messageContent.text = messageNewstring;
-				socketpi.emit('LKN', messageContent);
+				var messageContentd = {};
+				var messageNewstringd = $("#dht-new-message input#lkn-data-message.form-dht").val();
+				messageContentd.type = 'sendm';
+				messageContentd.lkn = 'data';
+				messageContentd.cycleid = cycleid;
+				messageContentd.text = messageNewstringd;
+				socketpi.emit('LKN', messageContentd);
 
 			break;
 
 			case "lkn-validate-science":
 				//send a message to server to connect to peer to peer Network
-				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#lkn-science-message.form-dht").val();
-				messageContent.type = 'sendm';
-				messageContent.lkn = 'science';
-				messageContent.cycleid = cycleid;
-				messageContent.text = messageNewstring;
-				socketpi.emit('LKN', messageContent);
+				var messageContents = {};
+				var messageNewstrings = $("#dht-new-message input#lkn-science-message.form-dht").val();
+				messageContents.type = 'sendm';
+				messageContents.lkn = 'science';
+				messageContents.cycleid = cycleid;
+				messageContents.text = messageNewstrings;
+				socketpi.emit('LKN', messageContents);
 
 			break;
 
 			case "lkn-validate-compute":
 				//send a message to server to connect to peer to peer Network
-				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#lkn-compute-message.form-dht").val();
-				messageContent.type = 'sendm';
-				messageContent.lkn = 'compute';
-				messageContent.cycleid = cycleid;
-				messageContent.text = messageNewstring;
-				socketpi.emit('LKN', messageContent);
+				var messageContentc = {};
+				var messageNewstringc = $("#dht-new-message input#lkn-compute-message.form-dht").val();
+				messageContentc.type = 'sendm';
+				messageContentc.lkn = 'compute';
+				messageContentc.cycleid = cycleid;
+				messageContentc.text = messageNewstringc;
+				socketpi.emit('LKN', messageContentc);
 
 			break;
 
 			case "lkn-consensus-value":
 				//send a message to server to connect to peer to peer Network
-				var messageContent = {};
-				var messageNewstring = $("#dht-new-message input#lkn-value-message.form-dht").val();
-				messageContent.type = 'sendm';
-				messageContent.lkn = 'value';
-				messageContent.cycleid = cycleid;
-				messageContent.text = messageNewstring;
-				socketpi.emit('LKN', messageContent);
+				var messageContentv = {};
+				var messageNewstringv = $("#dht-new-message input#lkn-value-message.form-dht").val();
+				messageContentv.type = 'sendm';
+				messageContentv.lkn = 'value';
+				messageContentv.cycleid = cycleid;
+				messageContentv.text = messageNewstringv;
+				socketpi.emit('LKN', messageContentv);
 
 			break;
 
@@ -245,22 +246,48 @@ console.log(buildurl);
 
 	});
 
-
-	socketpi.on('new-lkn-message', function (lknmessageIn) {
-		// which cycle belongs too?
-		if(lknmessageIn.lkn == 'start')
+	socketpi.on('return-uuid', function (uuidIn) {
+		// set UUID for cycle
+		if(uuidIn.length > 0)
 		{
 			var lkncycle = '';
-			lkncycle += '<div id="lkn-cycle-id" data-cycleid=' + lknmessageIn.cycleid + '>';
-			lkncycle += 'Cycle = 1  ID= ' + lknmessageIn.cycleid;
-			lkncycle += '<span id="lkn-datamodel-' + lknmessageIn.cycleid + '"> Data Model: </span>';
-			lkncycle += '<span id="lkn-data-' + lknmessageIn.cycleid + '"> Data:  </span>';
-			lkncycle += '<span id="lkn-science-' + lknmessageIn.cycleid + '"> Science: </span>';
-			lkncycle += '<span id="lkn-compute-' + lknmessageIn.cycleid + '"> Compute: </span>';
-			lkncycle += '<span id="lkn-value-' + lknmessageIn.cycleid + '"> Value:: </span>';
+			lkncycle += '<div id="lkn-cycle-uuid">';
+			lkncycle += '<div id="cycleid-uuid" data-cycleid=' + uuidIn + '>UUID - ' + uuidIn + '</div>';
+			lkncycle += '	<span id="lkn-datamodel-validate"><input id="lkn-datamodel-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-datamodel" href="" >Set datamodel</a>';
+			lkncycle += '</div>';
+			lkncycle += '<div id="lkn-data-validation">';
+			lkncycle += '	<span id="dht-new-message"><input id="lkn-data-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-data" href="" >Data Validate</a>';
+			lkncycle += '</div>';
+			lkncycle += '<div id="lkn-science-validation">';
+			lkncycle += '	<span id="dht-new-message"><input id="lkn-science-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-science" href="" >Science Validate</a>';
+			lkncycle += '</div>';
+			lkncycle += '<div id="lkn-compute-validation">';
+			lkncycle += '	<span id="dht-new-message"><input id="lkn-compute-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-compute" href="" >Compute Validate</a>';
+			lkncycle += '</div>';
+			lkncycle += '<div id="lkn-kt-consensus">';
+			lkncycle += '	<span id="dht-new-message"><input id="lkn-value-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-consensus-value" href="" >Value consensus</a>';
 			lkncycle += '</div>';
 
-			$("#network-messages").append(lkncycle);
+			$("#k-in-form").append(lkncycle);
+		}
+
+  });
+
+	socketpi.on('new-lkn-message', function (lknmessageIn) {
+console.log(lknmessageIn);
+			if(lknmessageIn.lkn == 'start')
+			{
+				var lknbase = '';
+				lknbase += '<div id="lkn-cycle-id" data-cycleid=' + lknmessageIn.cycleid + '>';
+				lknbase += 'Cycle = 1  ID= ' + lknmessageIn.cycleid;
+				lknbase += '<span id="lkn-datamodel-' + lknmessageIn.cycleid + '"> Data Model: </span>';
+				lknbase += '<span id="lkn-data-' + lknmessageIn.cycleid + '"> Data:  </span>';
+				lknbase += '<span id="lkn-science-' + lknmessageIn.cycleid + '"> Science: </span>';
+				lknbase += '<span id="lkn-compute-' + lknmessageIn.cycleid + '"> Compute: </span>';
+				lknbase += '<span id="lkn-value-' + lknmessageIn.cycleid + '"> Value:: </span>';
+				lknbase += '</div>';
+
+				$("#network-messages").append(lknbase);
 		}
 		else if(lknmessageIn.lkn == 'datamodel')
 		{
@@ -287,7 +314,7 @@ console.log(buildurl);
 	});
 
 	livepouch = new pouchdbSettings();
-	// save in context of tool knowledge template name
+	// save in context of tool  template name
 });
 
 (function () {
