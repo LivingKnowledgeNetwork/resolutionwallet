@@ -16,6 +16,7 @@ const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
 const uuidv4 = require('uuid/v4');
+const DatamodelVal = require('./validate-datamodel.js');
 
 /**
 * controls start of node.js server
@@ -25,7 +26,7 @@ const uuidv4 = require('uuid/v4');
 function start(route, handle) {
 
   PeertoPeer = new peertopeer();
-
+  DatamodelValid = new DatamodelVal();
 
 	var app = http.createServer(onRequest).listen(8822);
 console.log('server up');
@@ -73,9 +74,14 @@ console.log('server up');
 			{
 				PeertoPeer.readmDHTkad();
 			}
+      else if(dataIN.type == "validate-datamodel")
+      {
+          DatamodelValid.validatdString(socket);
+      }
 			else if(dataIN.type == "sendm")
 			{
-				PeertoPeer.sendmDHTkad(dataIN);
+        // individual validation paths have been validated, send network message
+        PeertoPeer.sendmDHTkad(dataIN);
 			}
 			else if(dataIN.type == "smartcontractID")
 			{

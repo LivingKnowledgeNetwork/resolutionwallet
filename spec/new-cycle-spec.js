@@ -7,7 +7,7 @@ var baseUrl = casper.cli.get('baseUrl');
 casper.test.comment("Add a new science cycle");
 
 casper.start(baseUrl, function() {
-  this.test.comment('click on build new mapping link');
+  this.test.comment('click on science link');
   this.mouseEvent('click', '#dmap-list');
 });
 
