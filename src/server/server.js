@@ -56,7 +56,7 @@ console.log('server up');
 
 			if(dataIN == "start")
 			{
-				//socket.emit('dhtlive', "DHT started");
+				socket.emit('g-coll', "guardian-coll-started");
 
 			}
 			else if(dataIN == "seed")

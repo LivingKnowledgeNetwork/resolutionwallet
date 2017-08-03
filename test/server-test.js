@@ -5,8 +5,6 @@ var util = require('util');
 var assert = require('assert'),
       http = require('http');
 
-
-
 describe('server', function () {
   before(function () {
     var handle = {};
