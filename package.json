@@ -7,7 +7,9 @@
   "scripts": {
     "start": "electron .",
     "postinstall": "electron-rebuild",
-    "test": "casperjs test spec/ --baseUrl='http://localhost/lkn/code/resolutionwallet/src/index.html'"
+    "test": "npm run test:unit --silent && npm run test:acceptance --silent",
+    "test:unit": "mocha",
+    "test:acceptance": "casperjs test spec/ --baseUrl='http://localhost/lkn/code/resolutionwallet/src/index.html'"
   },
   "engineStrict" : true,
   "engines" : { "node" : ">6.4.1" },
