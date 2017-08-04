@@ -97,7 +97,7 @@ console.log(idclickF);
 			var messageNewstringd = $("#dht-new-message input#lkn-data-message.form-dht").val();
 			messageContentd.type = 'sendm';
 			messageContentd.lkn = 'data';
-			messageContentd.cycleid = cycleid;
+			messageContentd.cycleid = cycleidF;
 			messageContentd.text = messageNewstringd;
 			socketpi.emit('LKN', messageContentd);
 
@@ -109,7 +109,7 @@ console.log(idclickF);
 			var messageNewstrings = $("#dht-new-message input#lkn-science-message.form-dht").val();
 			messageContents.type = 'sendm';
 			messageContents.lkn = 'science';
-			messageContents.cycleid = cycleid;
+			messageContents.cycleid = cycleidF;
 			messageContents.text = messageNewstrings;
 			socketpi.emit('LKN', messageContents);
 
@@ -118,10 +118,10 @@ console.log(idclickF);
 		case "lkn-validate-compute":
 			//send a message to server to connect to peer to peer Network
 			var messageContentc = {};
-			var messageNewstringc = $("#dht-new-message input#lkn-compute-message.form-dht").val();
-			messageContentc.type = 'sendm';
+			var messageNewstringc = $("select#lkn-datamodel-type").val();
+			messageContentc.type = 'validate-compute';
 			messageContentc.lkn = 'compute';
-			messageContentc.cycleid = cycleid;
+			messageContentc.cycleid = cycleidF;
 			messageContentc.text = messageNewstringc;
 			socketpi.emit('LKN', messageContentc);
 
@@ -133,7 +133,7 @@ console.log(idclickF);
 			var messageNewstringv = $("#dht-new-message input#lkn-value-message.form-dht").val();
 			messageContentv.type = 'sendm';
 			messageContentv.lkn = 'value';
-			messageContentv.cycleid = cycleid;
+			messageContentv.cycleid = cycleidF;
 			messageContentv.text = messageNewstringv;
 			socketpi.emit('LKN', messageContentv);
 
@@ -290,7 +290,18 @@ console.log(buildurl);
 			lkncycle += '	<span id="dht-new-message"><input id="lkn-science-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-science" href="" >Science Validate</a>';
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-compute-validation">';
-			lkncycle += '	<span id="dht-new-message"><input id="lkn-compute-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-compute" href="" >Compute Validate</a>';
+			lkncycle += '	<span id="dht-new-message">';
+			lkncycle += '<label for="lkn-datamodel-desc">Pre-defined compute types:</label>';
+			lkncycle += '	<select class="select-datamodel" id="lkn-datamodel-type">';
+			lkncycle += '		<option value="none" selected="">Please select</option>';
+			lkncycle += '		<option value="local">Local</option>';
+			lkncycle += '		<option value="docker">Docker</option>';
+			lkncycle += '		<option value="mobile">Mobile</option>';
+			lkncycle += '		<option value="cloud">Cloud</option>';
+			lkncycle += '		<option value="thinking">Thinking</option>';
+			lkncycle += '		<option value="truebits">Truebits</option>';
+			lkncycle += '	</select>';
+			lkncycle += '</span><a id="lkn-validate-compute" href="" >Compute Validate</a>';
 			lkncycle += '<span id="lkn-validate-compute-status" ></span>';
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-kt-consensus">';
@@ -347,6 +358,14 @@ console.log(lknmessageIn);
 			if(validateMessage == 'passed')
 			{
 				$("#lkn-validate-datamodel-status").append('<b>' + validateMessage + '</b>');
+			}
+	});
+
+	socketpi.on('validate-compute', function (validateMessage) {
+
+			if(validateMessage == 'passed')
+			{
+				$("#lkn-validate-compute-status").append('<b>' + validateMessage + '</b>');
 			}
 	});
 
