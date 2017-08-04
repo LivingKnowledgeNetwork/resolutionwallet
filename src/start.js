@@ -64,6 +64,7 @@ console.log(idclick);
 
 				socketpi.emit('LKN', 'start-uuid');
 				$("#k-in-form").show();
+				$("#roll-to-network").hide();
 
 			break;
 
@@ -83,6 +84,7 @@ console.log(idclickF);
 			//send a message to server to connect to peer to peer Network
 			var messageContent = {};
 			var messageNewstring = $("select#lkn-datamodel-type").val();
+console.log(messageNewstring);
 			messageContent.type = 'validate-datamodel';
 			messageContent.lkn = 'datamodel';
 			messageContent.cycleid = cycleidF;
@@ -118,7 +120,7 @@ console.log(idclickF);
 		case "lkn-validate-compute":
 			//send a message to server to connect to peer to peer Network
 			var messageContentc = {};
-			var messageNewstringc = $("select#lkn-datamodel-type").val();
+			var messageNewstringc = $("select#lkn-compute-type").val();
 			messageContentc.type = 'validate-compute';
 			messageContentc.lkn = 'compute';
 			messageContentc.cycleid = cycleidF;
@@ -139,40 +141,6 @@ console.log(idclickF);
 
 		break;
 
-		}
-
-	});
-
-// #sensor-data-add-new  form #sensor_form ul li button #sensor-data-save.submit
-		$("#sensor-data-save").click(function(e) {
-			e.preventDefault(e);
-			var targetclick = e.target;
-console.log(targetclick);
-console.log($(targetclick).attr("id"));
-			if($(targetclick).attr("id") == "sensor-data-save" )
-			{
-			var sensorNew = {};
-			var sensorInfo = {};
-			// extract sensor details form or auto via bluetooth firmware call
-			var sensorname = $("#sensor_form #add-name-sensor").val();
-			var sensorFWid = $("#sensor_form #add-firmware-sensor").val();
-			var sensorAcc = $("input#add-acc-sensor").val();
-			var sensorTemp = $("input#add-temp-sensor").val();
-			var sensorIRlight = $("input#add-irlight-sensor").val();
-			var sensorGene = $("input#add-gene-sensor").val();
-			sensorInfo.devicename = sensorname;
-			sensorInfo.FWid = sensorFWid;
-			sensorInfo.Accellerometer = sensorAcc;
-			sensorInfo.Temperature = sensorTemp;
-			sensorInfo.IRlight = sensorIRlight;
-			sensorInfo.gene = sensorGene;
-			sensorNew.type = 'sensor-add';
-			sensorNew.info = sensorInfo;
-			socketpi.emit('ethereumAPI', sensorNew);
-			// remove the form
-			//$("#sensor_form").hide();
-			//$("#sensor-data-save").hide();
-			$("#sensor-data-template-form").hide();
 		}
 
 	});
@@ -212,13 +180,6 @@ console.log($(targetclick).attr("class"));
 			socketpi.emit('ethereumAPI', setContractpermission);
 
 		}
-		else if ($(targetclick).attr("id") == "data-api-call")
-		{
-			// call the storage contract, get token and then make API call to SAFE API to get the dataIN
-
-
-
-		}
 		else if($(targetclick).attr("id") == "urllink")
 		{
 
@@ -227,9 +188,39 @@ console.log(buildurl);
 			window.open(buildurl);
 
 		}
+		else if($(targetclick).attr("id") == "add-value")
+		{
+			var Cuuid = $(targetclick).data('valueinput');
+console.log(Cuuid);
+			var rollConfirm = '';
+			rollConfirm += '	<span id="dht-new-message"><input id="lkn-value-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-attribute-value" href="" >Attribute</a>';
+			rollConfirm += '<span id="lkn-consensus-status" ></span>';
+			// need to id to spefic entry
+			$("#express-value-" + Cuuid).append(rollConfirm);
+
+		}
 
 	});
 
+	// button clicks
+	$("button").click(function(e) {
+		e.preventDefault(e);
+console.log('button clicked');
+		var targetclick = e.target;
+console.log(targetclick);
+		if($(targetclick).attr("id") == "send-to-network")
+		{
+			var messageCyclesend = {};
+			var currentCycle = $("#dht-new-message input#lkn-value-message.form-dht").val();
+			messageCyclesend.type = 'sendm';
+			messageCyclesend.lkn = 'cycleid';
+			messageCyclesend.cycleid = currentCycle;
+			messageCyclesend.text = 'broadcast to network';
+			socketpi.emit('LKN', messageCyclesend);
+		}
+
+	});
+/*  Socket listeners */
 	socketpi.on('dhtlive', function (connect) {
 
 		$("#Dsensor-api-status").text('live');
@@ -294,7 +285,7 @@ console.log(buildurl);
 			lkncycle += '<div id="lkn-compute-validation">';
 			lkncycle += '	<span id="dht-new-message">';
 			lkncycle += '<label for="lkn-datamodel-desc">Pre-defined compute types:</label>';
-			lkncycle += '	<select class="select-datamodel" id="lkn-datamodel-type">';
+			lkncycle += '	<select class="select-compute" id="lkn-compute-type">';
 			lkncycle += '		<option value="none" selected="">Please select</option>';
 			lkncycle += '		<option value="local">Local</option>';
 			lkncycle += '		<option value="docker">Docker</option>';
@@ -307,8 +298,6 @@ console.log(buildurl);
 			lkncycle += '<span id="lkn-validate-compute-status" ></span>';
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-kt-consensus">';
-			lkncycle += '	<span id="dht-new-message"><input id="lkn-value-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-consensus-value" href="" >Consensus & KT</a>';
-			lkncycle += '<span id="lkn-consensus-status" ></span>';
 			lkncycle += '</div>';
 
 			$("#k-in-form").append(lkncycle);
@@ -317,8 +306,8 @@ console.log(buildurl);
   });
 
 	socketpi.on('new-lkn-message', function (lknmessageIn) {
-console.log(lknmessageIn);
-			if(lknmessageIn.lkn == 'start')
+
+			if(lknmessageIn.lkn == 'cycleid')
 			{
 				var lknbase = '';
 				lknbase += '<div id="lkn-cycle-id" data-cycleid=' + lknmessageIn.cycleid + '>';
@@ -326,11 +315,21 @@ console.log(lknmessageIn);
 				lknbase += '<span id="lkn-datamodel-' + lknmessageIn.cycleid + '"> Data Model: </span>';
 				lknbase += '<span id="lkn-data-' + lknmessageIn.cycleid + '"> Data:  </span>';
 				lknbase += '<span id="lkn-science-' + lknmessageIn.cycleid + '"> Science: </span>';
+				lknbase += '<span id="lkn-consensus-' + lknmessageIn.cycleid + '"> <a href="" id="start-consensus" >Start Consensus</a> </span>';
 				lknbase += '<span id="lkn-compute-' + lknmessageIn.cycleid + '"> Compute: </span>';
-				lknbase += '<span id="lkn-value-' + lknmessageIn.cycleid + '"> Value:: </span>';
+				lknbase += '<span id="lkn-value-' + lknmessageIn.cycleid + '"> <a href="" id="add-value" data-valueinput=' + lknmessageIn.cycleid + '>value</a> </span>';
+				lknbase += '<span id="express-value-' + lknmessageIn.cycleid + '"></span>';
+				lknbase += '<span id="lkn-kt-' + lknmessageIn.cycleid + '"> KT== </span>';
 				lknbase += '</div>';
 
 				$("#network-messages").append(lknbase);
+
+				// add context info
+				$("#lkn-datamodel-" + lknmessageIn.cycleid).append('<b>' + lknmessageIn.text.datamodel + '</b>');
+				$("#lkn-data-" + lknmessageIn.cycleid).append('<a id="urllink" href="' + lknmessageIn.text.data + '">Source</a>');
+		  	$("#lkn-science-" + lknmessageIn.cycleid).append('<a id="urllink" href="' + lknmessageIn.text.science + '">Repo</a>');
+			  $("#lkn-compute-" + lknmessageIn.cycleid).append('<b>' + lknmessageIn.text.compute + '</b>');
+
 		}
 		else if(lknmessageIn.lkn == 'datamodel')
 		{
@@ -385,6 +384,20 @@ console.log(lknmessageIn);
 			if(validateMessage == 'passed')
 			{
 				$("#lkn-validate-compute-status").append('<b>' + validateMessage + '</b>');
+			}
+	});
+
+	socketpi.on('validation-complete', function (validateMessage) {
+
+			$("#roll-to-network").show();
+	});
+
+	socketpi.on('network-informed', function (validateMessage) {
+
+			if(validateMessage == 'sent')
+			{
+
+
 			}
 	});
 

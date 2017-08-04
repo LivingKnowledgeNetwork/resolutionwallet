@@ -24,8 +24,11 @@ var DataValid = function() {
 * @method validatdString
 *
 */
-DataValid.prototype.validatdString = function(socket) {
+DataValid.prototype.validatdString = function(socket, CycleHolder) {
 
+  CycleHolder.data = 1;
+console.log('cyclehoder in data');
+console.log(CycleHolder);
   socket.emit('validate-data', 'passed');
 
 };

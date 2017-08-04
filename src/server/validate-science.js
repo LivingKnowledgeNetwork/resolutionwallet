@@ -24,8 +24,11 @@ var ScienceValid = function() {
 * @method validatdString
 *
 */
-ScienceValid.prototype.validatdString = function(socket) {
+ScienceValid.prototype.validatdString = function(socket, CycleHolder) {
 
+  CycleHolder.science = 1;
+console.log('cyclehoder in science');
+console.log(CycleHolder);
   socket.emit('validate-science', 'passed');
 
 };

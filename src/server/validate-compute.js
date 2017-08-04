@@ -24,9 +24,21 @@ var ComputeValid = function() {
 * @method validatdString
 *
 */
-ComputeValid.prototype.validatdString = function(socket) {
+ComputeValid.prototype.validatdString = function(socket, CycleHolder) {
 
+  CycleHolder.compute = 1;
+console.log('cyclehoder in compute');
+console.log(CycleHolder);
   socket.emit('validate-compute', 'passed');
+
+  var sumValidation = CycleHolder.datamodel + CycleHolder.data + CycleHolder.science + CycleHolder.compute;
+  if(sumValidation == 4)
+  {
+    // all validated, display roll message button
+  socket.emit('validation-complete', 'complete');
+
+
+  }
 
 };
 

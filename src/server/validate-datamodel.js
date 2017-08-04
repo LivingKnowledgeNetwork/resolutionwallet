@@ -24,8 +24,11 @@ var DatamodelValid = function() {
 * @method validatdString
 *
 */
-DatamodelValid.prototype.validatdString = function(socket) {
+DatamodelValid.prototype.validatdString = function(socket, CycleHolder) {
 
+  CycleHolder.datamodel = 1;
+console.log('cyclehoder in datamodel');
+console.log(CycleHolder);  
   socket.emit('validate-datamodel', 'passed');
 
 };

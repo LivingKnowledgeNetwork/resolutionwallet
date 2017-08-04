@@ -91,12 +91,7 @@ peerTopeer.prototype.getKnowledge = function() {
 */
 peerTopeer.prototype.sendmDHTkad = function(textIN) {
 
-	var messagePtoP = {};
-	messagePtoP.type = textIN.type;
-	messagePtoP.lkn = textIN.lkn;
-	messagePtoP.cycleid = textIN.cycleid;
-	messagePtoP.text = textIN.text;
-	var serialisemessage = JSON.stringify(messagePtoP);
+	var serialisemessage = JSON.stringify(textIN);
 
 	this.liveDHT.putMessage('', serialisemessage);
 
@@ -170,10 +165,16 @@ console.log('filter smart contract message ============== smart contract message
 	else if(messContent.lkn)
 	{
 console.log('LKN protocol input type ----------->');
-//console.log(messContent);
+console.log(messContent);
 		var lknprocess = messContent.lkn;
 
 		switch(lknprocess){
+
+			case "cycleid":
+
+				localthis.emit('lkn-message', messContent);
+
+			break;
 
 			case "start":
 

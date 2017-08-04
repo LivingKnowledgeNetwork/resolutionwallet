@@ -30,6 +30,7 @@ const ConsensusKTstart = require('./consensus-kt.js');
 function start(route, handle) {
 
   PeertoPeer = new peertopeer();
+  var CycleHolder = {};
   DatamodelValid = new DatamodelVal();
   DataValid = new DataVal();
   ScienceValid = new ScienceVal();
@@ -71,6 +72,21 @@ console.log('server up');
 			else if(dataIN == "start-uuid")
 			{
 				var newUUID = uuidv4();
+        var cycleStatus = {};
+        cycleStatus.uuid = newUUID;
+        cycleStatus.datamodel = 0;
+        cycleStatus.datamodeluri = '';
+        cycleStatus.data = 0;
+        cycleStatus.datauri = '';
+        cycleStatus.science = 0;
+        cycleStatus.scienceuri = '';
+        cycleStatus.compute = 0;
+        cycleStatus.computeuri = '';
+        cycleStatus.rolled = 0;
+        cycleStatus.consensus = 0;
+        cycleStatus.kt = 0;
+        CycleHolder = cycleStatus;
+console.log(CycleHolder);
         socket.emit('return-uuid', newUUID);
 			}
       if(dataIN == "get-latest")
@@ -83,19 +99,23 @@ console.log('server up');
 			}
       else if(dataIN.type == "validate-datamodel")
       {
-          DatamodelValid.validatdString(socket);
-      }
-      else if(dataIN.type == "validate-science")
-      {
-          ScienceValid.validatdString(socket);
+          CycleHolder.datamodeluri = dataIN.text;
+          DatamodelValid.validatdString(socket, CycleHolder);
       }
       else if(dataIN.type == "validate-data")
       {
-          DataValid.validatdString(socket);
+         CycleHolder.datauri = dataIN.text;
+         DataValid.validatdString(socket, CycleHolder);
+      }
+      else if(dataIN.type == "validate-science")
+      {
+          CycleHolder.scienceuri = dataIN.text;
+          ScienceValid.validatdString(socket, CycleHolder);
       }
       else if(dataIN.type == "validate-compute")
       {
-          ComputeValid.validatdString(socket);
+         CycleHolder.computeuri = dataIN.text;
+          ComputeValid.validatdString(socket, CycleHolder);
       }
       else if(dataIN.type == "consensus-kt")
       {
@@ -103,14 +123,26 @@ console.log('server up');
       }
 			else if(dataIN.type == "sendm")
 			{
+console.log(dataIN);
         // individual validation paths have been validated, send network message
-        PeertoPeer.sendmDHTkad(dataIN);
+        // first filter what get sent to network
+        var filterText = {};
+        filterText.datamodel = CycleHolder.datamodeluri;
+        filterText.data = CycleHolder.datauri;
+        filterText.science = CycleHolder.scienceuri;
+        filterText.compute = CycleHolder.computeuri;
+        var networkData = {};
+        networkData.type = 'valid-cycle';
+        networkData.lkn = dataIN.lkn;
+        networkData.cycleid = CycleHolder.uuid;
+        networkData.text = filterText;
+        PeertoPeer.sendmDHTkad(networkData);
+
 			}
 			else if(dataIN.type == "smartcontractID")
 			{
 				PeertoPeer.sendmDHTkad(dataIN.pubethk);
 			}
-
 
 		});
 
@@ -127,7 +159,7 @@ console.log('server up');
 		});
 
 		PeertoPeer.on("lkn-message", function(newSCnotice) {
-			// call ethereum api
+console.log('validate fae server');
 			socket.emit('new-lkn-message', newSCnotice);
 
 		});
