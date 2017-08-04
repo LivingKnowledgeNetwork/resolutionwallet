@@ -17,6 +17,7 @@ const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
 const uuidv4 = require('uuid/v4');
 const DatamodelVal = require('./validate-datamodel.js');
+const DataVal = require('./validate-data.js');
 const ComputeVal = require('./validate-compute.js');
 
 /**
@@ -28,6 +29,7 @@ function start(route, handle) {
 
   PeertoPeer = new peertopeer();
   DatamodelValid = new DatamodelVal();
+  DataValid = new DataVal();
   ComputeValid = new ComputeVal();
 
 	var app = http.createServer(onRequest).listen(8822);
@@ -78,6 +80,10 @@ console.log('server up');
       else if(dataIN.type == "validate-datamodel")
       {
           DatamodelValid.validatdString(socket);
+      }
+      else if(dataIN.type == "validate-data")
+      {        
+          DataValid.validatdString(socket);
       }
       else if(dataIN.type == "validate-compute")
       {

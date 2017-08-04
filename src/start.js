@@ -95,7 +95,7 @@ console.log(idclickF);
 			//send a message to server to connect to peer to peer Network
 			var messageContentd = {};
 			var messageNewstringd = $("#dht-new-message input#lkn-data-message.form-dht").val();
-			messageContentd.type = 'sendm';
+			messageContentd.type = 'validate-data';
 			messageContentd.lkn = 'data';
 			messageContentd.cycleid = cycleidF;
 			messageContentd.text = messageNewstringd;
@@ -285,6 +285,7 @@ console.log(buildurl);
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-data-validation">';
 			lkncycle += '	<span id="dht-new-message"><input id="lkn-data-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-data" href="" >Data Validate</a>';
+			lkncycle += '<span id="lkn-validate-data-status" ></span>';
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-science-validation">';
 			lkncycle += '	<span id="dht-new-message"><input id="lkn-science-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-science" href="" >Science Validate</a>';
@@ -358,6 +359,14 @@ console.log(lknmessageIn);
 			if(validateMessage == 'passed')
 			{
 				$("#lkn-validate-datamodel-status").append('<b>' + validateMessage + '</b>');
+			}
+	});
+
+	socketpi.on('validate-data', function (validateMessage) {
+
+			if(validateMessage == 'passed')
+			{
+				$("#lkn-validate-data-status").append('<b>' + validateMessage + '</b>');
 			}
 	});
 
