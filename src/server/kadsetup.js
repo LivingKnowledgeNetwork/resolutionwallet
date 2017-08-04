@@ -72,7 +72,7 @@ KAD.prototype.startDHT = function(portIn) {
   // Create your contact
   var contact = kad.contacts.AddressPortContact({
     address: ipaddress,
-    port: 8816//portnumber
+    port: portIn//portnumber
   });
   // Decorate your transport
   var NatTransport = traverse.TransportDecorator(kad.transports.UDP);
@@ -98,7 +98,7 @@ KAD.prototype.startDHT = function(portIn) {
   if(this.dht)
   {
     var seedData = {};
-  	seedData.ip = '52.4.43.80';//'188.166.138.93';//'52.4.43.80';//'127.0.0.1';  // need list of peers
+  	seedData.ip = '52.4.43.80';//'188.166.138.93';// need list of peers
   	seedData.port = 8816;
   	var messagePtoP = {};
   	messagePtoP.type = 'join';
@@ -106,19 +106,6 @@ KAD.prototype.startDHT = function(portIn) {
   	var serialisemessage = JSON.stringify(messagePtoP);
   	seedData.sendmessage = serialisemessage;
     localthis.seedSingle(seedData);
-/*    var seed = {
-      address: '52.4.43.80',
-      port: 8816
-    };
-
-    localthis.dht.connect(seed, function(err) {
-  console.log('begin seed connection droplet');
-  console.log(err);
-      //var key = hashkey;
-      //var message = seedIn.sendmessage;
-      //localthis.putMessage(key, message);
-    });
-*/
     }
 
 };
@@ -160,7 +147,7 @@ KAD.prototype.seedSingle = function(seedIn) {
 
   var seed = {
     address: seedIn.ip,
-    port: 8816
+    port: seedIn.port
   };
 
   localthis.dht.connect(seed, function(err) {

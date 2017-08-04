@@ -291,6 +291,7 @@ console.log(buildurl);
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-compute-validation">';
 			lkncycle += '	<span id="dht-new-message"><input id="lkn-compute-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-validate-compute" href="" >Compute Validate</a>';
+			lkncycle += '<span id="lkn-validate-compute-status" ></span>';
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-kt-consensus">';
 			lkncycle += '	<span id="dht-new-message"><input id="lkn-value-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-consensus-value" href="" >Value consensus</a>';
