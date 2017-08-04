@@ -131,8 +131,8 @@ console.log(idclickF);
 			//send a message to server to connect to peer to peer Network
 			var messageContentv = {};
 			var messageNewstringv = $("#dht-new-message input#lkn-value-message.form-dht").val();
-			messageContentv.type = 'sendm';
-			messageContentv.lkn = 'value';
+			messageContentv.type = 'consensus-kt';
+			messageContentv.lkn = 'consensus';
 			messageContentv.cycleid = cycleidF;
 			messageContentv.text = messageNewstringv;
 			socketpi.emit('LKN', messageContentv);
@@ -307,7 +307,8 @@ console.log(buildurl);
 			lkncycle += '<span id="lkn-validate-compute-status" ></span>';
 			lkncycle += '</div>';
 			lkncycle += '<div id="lkn-kt-consensus">';
-			lkncycle += '	<span id="dht-new-message"><input id="lkn-value-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-consensus-value" href="" >Value consensus</a>';
+			lkncycle += '	<span id="dht-new-message"><input id="lkn-value-message" class="form-dht" type="text" placeholder=""></input></span><a id="lkn-consensus-value" href="" >Consensus & KT</a>';
+			lkncycle += '<span id="lkn-consensus-status" ></span>';
 			lkncycle += '</div>';
 
 			$("#k-in-form").append(lkncycle);
@@ -384,6 +385,14 @@ console.log(lknmessageIn);
 			if(validateMessage == 'passed')
 			{
 				$("#lkn-validate-compute-status").append('<b>' + validateMessage + '</b>');
+			}
+	});
+
+	socketpi.on('consensus-kt', function (validateMessage) {
+
+			if(validateMessage == 'none')
+			{
+				$("#lkn-consensus-status").append('<b>' + validateMessage + '</b>');
 			}
 	});
 

@@ -20,6 +20,7 @@ const DatamodelVal = require('./validate-datamodel.js');
 const DataVal = require('./validate-data.js');
 const ScienceVal = require('./validate-science.js');
 const ComputeVal = require('./validate-compute.js');
+const ConsensusKTstart = require('./consensus-kt.js');
 
 /**
 * controls start of node.js server
@@ -33,6 +34,7 @@ function start(route, handle) {
   DataValid = new DataVal();
   ScienceValid = new ScienceVal();
   ComputeValid = new ComputeVal();
+  ConsensusKT = new ConsensusKTstart();
 
 	var app = http.createServer(onRequest).listen(8822);
 console.log('server up');
@@ -94,6 +96,10 @@ console.log('server up');
       else if(dataIN.type == "validate-compute")
       {
           ComputeValid.validatdString(socket);
+      }
+      else if(dataIN.type == "consensus-kt")
+      {
+          ConsensusKT.startConsensus(socket);
       }
 			else if(dataIN.type == "sendm")
 			{
