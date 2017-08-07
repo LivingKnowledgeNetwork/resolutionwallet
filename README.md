@@ -3,26 +3,22 @@
 Graphical UI for guardian coll
 ==============================
 
-An experimental learning proof of concept code to assist building a Living Knowledge Network (LKN) protocol. The collaboration ethos is set out at https://docs.google.com/document/d/1xFs83-xVqlPJhRqCuN6bzS-bb7-k2b1cpGlrONnVhqk/edit?usp=sharing  The goal for the LKN protocol is to implement the ethos is code.   As specific functionality is identified and made modular, new code repositories will be setup and aggregated via the shell guardian coll code, https://github.com/LivingKnowledgeNetwork/guardiancoll
+An experimental learning proof of concept code to assist building a Living Knowledge Network (LKN) protocol. The collaboration ethos is set out at https://docs.google.com/document/d/1xFs83-xVqlPJhRqCuN6bzS-bb7-k2b1cpGlrONnVhqk/edit?usp=sharing  The goal for the LKN protocol is to implement the ethos in code.   As specific functionality is identified and made modular, new code repositories will be setup and aggregated via the shell guardian coll code, https://github.com/LivingKnowledgeNetwork/guardiancoll
 
 How to use
 ==========
 First install the ResolutionWallet  see below.
 
-1. Click on PtoP tab link
-2. Enter an identity number for a science cycle and click start.
-3. A new entry will be displayed.
-4. Add a datamodel description and click the link to add.
-5. Add link to data source and click the link to add.
-6. Add link to the source of science e.g. github URL and click link to add.
-7. Describe type of computation, local, mobile, cloud, truebits etc.
-8. Value the science, enter a number and click the link to add.
-
-To add another CCSC (consilience collaboration science cycle) enter a new identity number and click start. Then repeat 3 to 8.
-
-Whichever identity number is live, data is added for the context.
-
-All entries a automatically shared across the LKN network.
+1. Click on Science tab link
+2. Click on Start link.
+3. A new entry form will be displayed.
+4. Add a datamodel description and click the Validate link.
+5. Add link to data source and click the validate link.
+6. Add link to the source of science e.g. github URL and click validate link.
+7. Describe type of computation, local, mobile, cloud, truebits etc. select from dropdown and click validate link.
+8. With all of the above validated, a Roll to Network button will appear.
+9. Click button to share knowledge with network.
+10. Click start link to start new entry.
 
 Existing knowledge in the network can view by clicking on the Get Knowledge link.
 
@@ -55,6 +51,14 @@ As server
 3. npm install
 4. sudo node index.js
 5. Put a copy of the resolutionwallet/src/   files ie. index.html in hosting directory
+
+
+Peer to Peer networks
+=====================
+
+The live PtoP network is on port 8816
+
+The test network is on port 7816   (this need to be manually edited in the kadsetup.js file for now)
 
 
 Collaborate and Contribute

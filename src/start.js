@@ -269,7 +269,7 @@ console.log(targetclick);
 			lkncycle += '		<option value="LKN-rw">LKN-rw</option>';
 			lkncycle += '		<option value="LKN-guardiancoll">LKN-guardiancoll</option>';
 			lkncycle += '		<option value="LKN-lh">LKN-living health</option>';
-			lkncycle += '		<option value="LKN--lh-gene">LH wearables</option>';
+			lkncycle += '		<option value="LKN--lh-wearable">LH wearables</option>';
 			lkncycle += '	</select>';
 			lkncycle += '<a id="lkn-validate-datamodel" href="" >Datamodel Validate</a>';
 			lkncycle += '<span id="lkn-validate-datamodel-status" ></span>';
