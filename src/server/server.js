@@ -16,6 +16,7 @@ const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 const peertopeer = require('./peertopeer.js');
 const uuidv4 = require('uuid/v4');
+const Coll = require('./coll.js');
 const DatamodelVal = require('./validate-datamodel.js');
 const DataVal = require('./validate-data.js');
 const ScienceVal = require('./validate-science.js');
@@ -30,6 +31,7 @@ const ConsensusKTstart = require('./consensus-kt.js');
 function start(route, handle) {
 
   PeertoPeer = new peertopeer();
+  liveColl = new Coll();
   var CycleHolder = {};
   DatamodelValid = new DatamodelVal();
   DataValid = new DataVal();
@@ -74,6 +76,7 @@ console.log('server up');
 				var newUUID = uuidv4();
         var cycleStatus = {};
         cycleStatus.uuid = newUUID;
+        cycleStatus.coll = liveColl.collID;
         cycleStatus.datamodel = 0;
         cycleStatus.datamodeluri = '';
         cycleStatus.data = 0;
@@ -89,9 +92,13 @@ console.log('server up');
 console.log(CycleHolder);
         socket.emit('return-uuid', newUUID);
 			}
+      if(dataIN == "get-my-contributions")
+      {
+        PeertoPeer.getKnowledge(liveColl.collID);
+      }
       if(dataIN == "get-latest")
       {
-        PeertoPeer.getKnowledge();
+        PeertoPeer.getKnowledge('network');
       }
 			else if(dataIN == "readm")
 			{
@@ -101,6 +108,23 @@ console.log(CycleHolder);
       {
           CycleHolder.datamodeluri = dataIN.text;
           DatamodelValid.validatdString(socket, CycleHolder);
+      }
+      else if(dataIN.type == "add-validate-innovation")
+      {
+        // build message to add to existing innovation
+        var filterText = {};
+        //filterText.datamodel = CycleHolder.datamodeluri;
+        //filterText.data = CycleHolder.datauri;
+        //filterText.science = CycleHolder.scienceuri;
+        //filterText.compute = CycleHolder.computeuri;
+        var networkData = {};
+        networkData.type = 'add-valid-cycle';
+        networkData.lkn = dataIN.lkn;
+        networkData.cycleid = dataIN.uuid;
+        networkData.coll = CycleHolder.coll;
+        networkData.text = filterText;
+console.log(networkData);
+        PeertoPeer.sendmDHTkad(networkData);
       }
       else if(dataIN.type == "validate-data")
       {
@@ -135,7 +159,9 @@ console.log(dataIN);
         networkData.type = 'valid-cycle';
         networkData.lkn = dataIN.lkn;
         networkData.cycleid = CycleHolder.uuid;
+        networkData.coll = CycleHolder.coll;
         networkData.text = filterText;
+console.log(networkData);
         PeertoPeer.sendmDHTkad(networkData);
 
 			}

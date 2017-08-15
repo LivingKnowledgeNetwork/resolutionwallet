@@ -63,7 +63,7 @@ peerTopeer.prototype.filterDHTkad = function(portIN) {
 	this.liveDHT.listLocalMessages();
 
 	this.liveDHT.on("newMfile", function(newFileIN) {
-
+console.log('listener new message fired');
 		var newmessageunknown = newFileIN;
 		// filter per type of message
 		localthis.filterPtoPmessages(newmessageunknown);
@@ -78,9 +78,9 @@ peerTopeer.prototype.filterDHTkad = function(portIN) {
 * @method getKnowledge
 *
 */
-peerTopeer.prototype.getKnowledge = function() {
+peerTopeer.prototype.getKnowledge = function(filter) {
 
-	this.liveDHT.currentKnowledge();
+	this.liveDHT.currentKnowledge(filter);
 
 };
 
@@ -171,13 +171,23 @@ console.log(messContent);
 		switch(lknprocess){
 
 			case "cycleid":
+				// need to filter whether this COLL input the innovation
+				if(messContent.coll == 123)
+				{
+					messContent.coll = 'me';
+					localthis.emit('lkn-message', messContent);
+				}
+				else
+			  {
+					messContent.coll = 'network';
+					localthis.emit('lkn-message', messContent);
+			  }
 
-				localthis.emit('lkn-message', messContent);
 
 			break;
 
-			case "start":
-
+			case "add-validate-innovation":
+						messContent.coll = 'add-innovation';
 						localthis.emit('lkn-message', messContent);
 
 			break;

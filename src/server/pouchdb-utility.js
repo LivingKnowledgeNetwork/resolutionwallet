@@ -57,6 +57,25 @@ console.log('post at ouch');
 
 };
 
+/**
+* save data to a single document
+* @method postColl
+*
+*/
+pouchdbServer.prototype.postColl = function(datain) {
+console.log('post at ouch');
+console.log(datain);
+	this.livepouch.post(datain, function (err, response) {
+		if(err)
+		{
+console.log('post err');
+console.log(err);
+		}
+console.log(response);
+	});
+
+};
+
 pouchdbServer.prototype.updateSingle = function(datain) {
 
 
@@ -72,6 +91,28 @@ console.log('get being call at pourch');
 		this.livepouch.get(docid, function(err, response) {
 //console.log(response);
 				cb(null, response);
+
+			});
+
+};
+
+/**
+* get data on one pouchdb document
+* @method getDoc
+*
+*/
+pouchdbServer.prototype.getColl = function(docid, callback) {
+console.log('get being call at pouch');
+		this.livepouch.get(docid, function(err, response) {
+				if(err)
+				{
+					callback.createCollID();
+				}
+				else
+			 {
+					callback.collID = response.collid;//56789;
+
+				}
 
 			});
 
@@ -137,29 +178,30 @@ console.log('all current docs');
 * @method allDocs
 *
 */
-pouchdbServer.prototype.createReadStreamStart = function(thisIN) {
+pouchdbServer.prototype.createReadStreamStart = function(filterIN, thisIN) {
 console.log('read stream being pouch');
 		var localthis = this;
 		this.livepouch.allDocs({include_docs: true}, function(err, response) {
 console.log('all current docs');
-//console.log(response);
+console.log(response);
 			// need to get start base info first then send updated to template
 			var baseContent = [];
 			var updateContent = [];
 			response.rows.forEach(function(newMes){
-
 				var valueData = JSON.parse(newMes.doc.title);
 				var valueData2 = JSON.parse(valueData.value);
-				if(valueData2.lkn == 'start')
-				{
-					//baseContent.push(newMes);
-					thisIN.emit("newMfile", newMes.doc.title);
-				}
-				else
-			  {
-					updateContent.push(newMes);
+console.log(valueData);
+					if(valueData2.lkn == 'cycleid')
+					{
+						//baseContent.push(newMes);
+						thisIN.emit("newMfile", newMes.doc.title);
+					}
+					else
+				  {
+						updateContent.push(newMes);
 
-				}
+					}
+
 		});
 
 		setTimeout(function(){

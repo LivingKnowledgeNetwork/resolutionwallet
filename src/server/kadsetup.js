@@ -115,10 +115,10 @@ KAD.prototype.startDHT = function(portIn) {
 * @method currentKnowledge
 *
 */
-KAD.prototype.currentKnowledge = function() {
+KAD.prototype.currentKnowledge = function(filter) {
 
   var localthis = this;
-	this.liveUtil.createReadStreamStart(localthis);
+	this.liveUtil.createReadStreamStart(filter, localthis);
 
 };
 
