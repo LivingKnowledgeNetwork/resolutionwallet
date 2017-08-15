@@ -120,7 +120,7 @@ peerTopeer.prototype.filterPtoPmessages = function(messagePack) {
 console.log('START OF FILTER MESSAGES package message ----------------');
 	var makeMessObj = JSON.parse(messagePack);
 	var messContent = JSON.parse(makeMessObj.value);
-
+console.log(messContent);
 	// filter for this DHT ID node
 	if(localthis.liveDHT.dht._self.nodeID == messContent.nodeID)
 	{

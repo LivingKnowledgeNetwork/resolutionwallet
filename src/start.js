@@ -153,10 +153,6 @@ console.log(messageNewstring);
 
 	});
 
-	$("#lkn-validate-type").change(function() {
-	  alert( "Handler for .change() called." );
-	});
-
 	// check permission statusCode
 	$("#network-messages").click(function(e) {
 		e.preventDefault(e);
@@ -167,17 +163,17 @@ console.log($(targetclick).attr("id"));
 console.log($(targetclick).attr("class"));
 
 		$(targetclick).change(function() {
-console.log('year or now to innovation');
 			// yes or no?
 			var valReview = $("select#lkn-validate-type").val();
-console.log(valReview);
+			var innoCID = $(targetclick).parent().data("icycleid");
+
 			if(valReview == 'yes')
 			{
 				// send message to network
 				addInnovation = {};
 				addInnovation.type = 'add-validate-innovation';
 				addInnovation.lkn = 'add-validate-innovation';
-				addInnovation.uuid = '';
+				addInnovation.uuid = innoCID;
 				addInnovation.validate = 'yes';
 				socketpi.emit('LKN', addInnovation);
 			}
@@ -187,8 +183,8 @@ console.log(valReview);
 				addInnovation = {};
 				addInnovation.type = 'add-validate-innovation';
 				addInnovation.lkn = 'add-validate-innovation';
-				addInnovation.uuid = '';
-				addInnovation.validate = 'yes';
+				addInnovation.uuid = innoCID;
+				addInnovation.validate = 'no';
 				socketpi.emit('LKN', addInnovation);
 			}
 		});
@@ -256,6 +252,8 @@ console.log(targetclick);
 			messageCyclesend.cycleid = currentCycle;
 			//messageCyclesend.text = 'broadcast to network';
 			socketpi.emit('LKN', messageCyclesend);
+			$("#k-in-form").empty();
+			$("#roll-to-network").empty();
 		}
 
 	});
@@ -371,9 +369,9 @@ console.log(targetclick);
 		{
 			var lknbase = '';
 			lknbase += '<li>';
-			lknbase += '<div id="add-validate">';
+			lknbase += '<div id="add-validate" data-icycleid=' + lknmessageIn.cycleid + '>';
 			lknbase += '<label for="lkn-validate-innovation">Validate innovation:</label>';
-			lknbase += '	<select class="select-valide" id="lkn-validate-type">';
+			lknbase += '	<select class="select-valide" id="lkn-validate-type" >';
 			lknbase += '		<option value="none" selected="">Please validate</option>';
 			lknbase += '		<option value="yes">yes</option>';
 			lknbase += '		<option value="no">no</option>';
@@ -403,7 +401,8 @@ console.log(targetclick);
 		}
 		else if(lknmessageIn.lkn == 'add-validate-innovation' && lknmessageIn.coll == 'add-innovation')
 		{
-console.log('new innovation to add');			
+console.log('new innovation to add');
+console.log(lknmessageIn.cycleid);
 			// need to append to an existing innovation
 			$("#inn-cycle-id-" + lknmessageIn.cycleid).append('<b> cycle 2</b>');
 			$("#add-inn-holder-" + lknmessageIn.cycleid).append('<b> Next innovation</b>');

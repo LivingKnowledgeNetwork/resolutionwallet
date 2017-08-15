@@ -181,8 +181,14 @@ KAD.prototype.putMessage = function(keyID, message) {
   var keymid = keyID;
   if(keyID.length == 0)
   {
-      var hashkey = crypto.createHash('md5').update(message).digest('hex');
-      keymid = hashkey;
+    function randomValueHex (len) {
+    return crypto.randomBytes(Math.ceil(len/2))
+        .toString('hex') // convert to hexadecimal format
+        .slice(0,len);   // return required number of characters
+      }
+
+      //var hashkey = crypto.createHash('md5').update(message).digest('hex');
+      keymid = randomValueHex(32);
   }
 
   this.dht.put(keymid, message, function() {

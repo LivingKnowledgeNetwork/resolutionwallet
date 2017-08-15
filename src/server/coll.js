@@ -31,7 +31,7 @@ var Coll = function() {
 */
 Coll.prototype.createCollID = function() {
 
-    var collIDnew = 567;
+    var collIDnew = 123;
     this.collID = collIDnew;
     // JSON structure
     var collNew = {};
