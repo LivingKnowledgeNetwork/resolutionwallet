@@ -253,7 +253,7 @@ console.log(targetclick);
 			//messageCyclesend.text = 'broadcast to network';
 			socketpi.emit('LKN', messageCyclesend);
 			$("#k-in-form").empty();
-			$("#roll-to-network").empty();
+			$("#roll-to-network").hide();
 		}
 
 	});
